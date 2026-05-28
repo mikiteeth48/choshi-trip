@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>銚子旅行プラン 2026 · 柏発 日帰りガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN SYSTEM — 白ベース・旅行ガイドブック風
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root{
+  /* Page backgrounds */
+  --bg:        #ffffff;
+  --bg-warm:   #faf8f5;
+  --bg-section:#f2efe9;
+
+  /* Text */
+  --ink:       #1d2d3e;
+  --ink-sub:   rgba(29,45,62,.60);
+  --ink-light: rgba(29,45,62,.40);
+
+  /* Accents */
+  --teal:      #2a8b8c;
+  --foam:      #3aa0a1;
+  --sand:      #9e6c2a;
+
+  /* Borders */
+  --bdr:       rgba(29,45,62,.11);
+  --bdr-soft:  rgba(29,45,62,.07);
+
+  /* Hero (stays dark) */
+  --hero-dark: #0b1622;
+  --hero-text: #f4f0e8;
+  --hero-muted:rgba(244,240,232,.52);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* ━━━ STICKY NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:7000;
+  display:flex;justify-content:center;align-items:stretch;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bdr);
+  transform:translateY(-100%);transition:transform .35s ease;
+}
+#sticky-nav.nav-visible{transform:translateY(0);}
+.snav-item{
+  padding:13px 22px;font-size:.62rem;letter-spacing:.16em;
+  color:var(--ink-sub);text-decoration:none;
+  border-right:1px solid var(--bdr-soft);
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.snav-item:last-child{border-right:none;}
+.snav-item:hover{color:var(--teal);background:rgba(42,139,140,.05);}
+
+/* ━━━ HERO (ダーク維持) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  position:relative;height:100vh;min-height:640px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 72px 72px;overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_in_Inubosaki_(9027196940).jpg') center 40%/cover no-repeat;
+  transform:scale(1.06);animation:slowZoom 18s ease-out forwards;
+}
+@keyframes slowZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(11,22,34,.04) 0%,
+    rgba(11,22,34,.20) 44%,
+    rgba(11,22,34,.82) 72%,
+    var(--hero-dark) 100%);
+}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.eyebrow{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--foam);letter-spacing:.14em;margin-bottom:14px;
+  opacity:0;animation:fadeUp .8s .2s forwards;
+}
+.hero h1{
+  font-family:'Noto Serif JP',serif;font-weight:300;
+  font-size:clamp(2.8rem,5vw,4.8rem);line-height:1.22;margin-bottom:20px;
+  color:var(--hero-text);opacity:0;animation:fadeUp .8s .45s forwards;
+}
+.hero h1 em{color:var(--foam);font-style:normal;}
+.hero-info{display:flex;gap:28px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .7s forwards;}
+.hero-info span{
+  font-size:.78rem;letter-spacing:.08em;color:var(--hero-muted);
+  display:flex;align-items:center;gap:8px;
+}
+.hero-info span::before{content:'';display:block;width:16px;height:1px;background:var(--foam);}
+.scroll-hint{
+  position:absolute;bottom:36px;right:60px;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeIn 1s 1.4s forwards;
+}
+.scroll-hint p{font-size:.6rem;letter-spacing:.2em;color:var(--hero-muted);writing-mode:vertical-rl;}
+.scroll-line{width:1px;height:56px;background:linear-gradient(to bottom,var(--foam),transparent);animation:sb 2.2s 1.8s infinite;}
+@keyframes sb{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.photo-credit{position:absolute;bottom:8px;right:8px;font-size:.58rem;color:rgba(255,255,255,.28);z-index:3;}
+
+/* ━━━ TRAIN BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.train-bar{
+  background:var(--bg-section);
+  border-top:3px solid var(--teal);       /* ダーク→ライトの切り替えマーカー */
+  border-bottom:1px solid var(--bdr);
+  padding:28px 72px;display:flex;justify-content:center;
+}
+.t-item{flex:1;max-width:300px;padding:12px 32px;text-align:center;position:relative;}
+.t-item+.t-item::before{content:'';position:absolute;left:0;top:10%;height:80%;width:1px;background:var(--bdr);}
+.t-label{font-size:.6rem;letter-spacing:.2em;color:var(--teal);margin-bottom:5px;font-weight:400;}
+.t-route{font-family:'Noto Serif JP',serif;font-size:1rem;margin-bottom:4px;color:var(--ink);}
+.t-time{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--sand);}
+.t-links{display:flex;gap:7px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.t-link{
+  font-size:.58rem;color:var(--teal);letter-spacing:.07em;
+  border:1px solid rgba(42,139,140,.38);padding:4px 11px;border-radius:100px;
+  text-decoration:none;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;
+}
+.t-link:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+/* ━━━ SECTION COMMON ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section{padding:96px 72px;max-width:1280px;margin:0 auto;}
+.sec-head{text-align:center;margin-bottom:72px;}
+.sec-tag{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1rem;color:var(--foam);letter-spacing:.18em;display:block;margin-bottom:10px;
+}
+.sec-title{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--ink);}
+.deco-line{width:52px;height:1px;background:linear-gradient(to right,var(--teal),transparent);margin:14px auto 0;}
+
+/* ━━━ PLAN CARDS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.plans{display:flex;flex-direction:column;gap:72px;}
+.plan-card{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:540px;border-radius:6px;overflow:hidden;
+  border:1px solid var(--bdr);
+  box-shadow:0 4px 32px rgba(29,45,62,.07);
+  opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease;
+}
+.plan-card.visible{opacity:1;transform:translateY(0);}
+.plan-card:nth-child(even){direction:rtl;}
+.plan-card:nth-child(even)>*{direction:ltr;}
+
+/* 写真ハーフ */
+.plan-photo{position:relative;overflow:hidden;min-height:460px;cursor:zoom-in;}
+.plan-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s ease;display:block;}
+.plan-card:hover .plan-photo img{transform:scale(1.06);}
+.plan-photo-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,22,34,.30),rgba(11,22,34,.04));pointer-events:none;}
+.plan-num{position:absolute;top:24px;left:28px;font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:300;color:rgba(255,255,255,.16);line-height:1;pointer-events:none;}
+.plan-badge{position:absolute;bottom:28px;left:28px;background:rgba(42,139,140,.88);backdrop-filter:blur(6px);color:#fff;font-size:.62rem;letter-spacing:.14em;padding:6px 16px;border-radius:100px;pointer-events:none;}
+
+/* コンテンツハーフ */
+.plan-body{background:var(--bg-warm);padding:48px 44px;display:flex;flex-direction:column;justify-content:space-between;}
+.plan-eyebrow{font-size:.6rem;letter-spacing:.2em;color:var(--teal);margin-bottom:7px;font-weight:400;}
+.plan-name{font-family:'Noto Serif JP',serif;font-weight:700;font-size:1.4rem;line-height:1.5;margin-bottom:6px;color:var(--ink);}
+.plan-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--foam);margin-bottom:18px;}
+.plan-desc{font-size:.82rem;line-height:1.95;color:var(--ink-sub);margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--bdr-soft);}
+
+/* タイムライン */
+.timeline{display:flex;flex-direction:column;margin-bottom:24px;}
+.tl{display:grid;grid-template-columns:60px 1fr;gap:12px;padding-bottom:20px;position:relative;}
+.tl:last-child{padding-bottom:0;}
+.tl::before{content:'';position:absolute;left:28px;top:24px;bottom:0;width:1px;background:rgba(42,139,140,.20);}
+.tl:last-child::before{display:none;}
+.tl-t{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:400;color:var(--foam);text-align:right;padding-top:3px;letter-spacing:.04em;}
+.tl.hl .tl-t{color:var(--sand);}
+.dot{position:absolute;left:23px;top:6px;width:13px;height:13px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-warm);}
+.tl.hl .dot{background:var(--teal);box-shadow:0 0 10px rgba(42,139,140,.4);}
+.tl-title{font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:400;margin-bottom:3px;line-height:1.45;color:var(--ink);}
+.tl.hl .tl-title{font-size:.92rem;font-weight:700;}
+.tl-note{font-size:.73rem;color:var(--ink-sub);line-height:1.65;}
+
+/* Mapsリンク */
+.map-link{font-size:.75rem;text-decoration:none;margin-left:5px;opacity:.45;display:inline-block;vertical-align:middle;transition:opacity .2s,transform .2s;}
+.map-link:hover{opacity:1;transform:scale(1.25);}
+
+/* サムネイル */
+.thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.thumb{position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in;}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block;}
+.thumb:hover img{transform:scale(1.1);}
+.thumb-cap{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,22,34,.78),transparent 55%);display:flex;align-items:flex-end;padding:8px 10px;font-size:.68rem;color:rgba(255,255,255,.9);letter-spacing:.04em;pointer-events:none;}
+
+/* 詳細ボタン */
+.plan-detail-btn{
+  display:block;width:100%;margin-top:18px;padding:12px 24px;
+  background:none;border:1px solid rgba(42,139,140,.32);
+  color:var(--teal);font-family:'Cormorant Garamond',serif;
+  font-size:.92rem;letter-spacing:.12em;cursor:pointer;
+  border-radius:2px;transition:background .25s,border-color .25s,color .25s;
+}
+.plan-detail-btn:hover{background:rgba(42,139,140,.07);border-color:var(--teal);color:var(--ink);}
+
+/* ━━━ HIGHLIGHTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hl-section{background:var(--bg-section);padding:96px 0;}
+.hl-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+.hl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.hl-card{
+  background:var(--bg);border:1px solid var(--bdr);border-radius:4px;overflow:hidden;
+  box-shadow:0 2px 16px rgba(29,45,62,.05);
+  transition:box-shadow .3s,transform .3s;
+}
+.hl-card:hover{box-shadow:0 6px 28px rgba(29,45,62,.11);transform:translateY(-3px);}
+.hl-img{position:relative;height:180px;overflow:hidden;cursor:zoom-in;}
+.hl-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block;}
+.hl-card:hover .hl-img img{transform:scale(1.08);}
+.hl-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(11,22,34,.88));pointer-events:none;}
+.hl-body{padding:18px 20px 22px;background:var(--bg);}
+.hl-icon{font-size:1.3rem;display:block;margin-bottom:7px;}
+.hl-title{font-family:'Noto Serif JP',serif;font-size:.92rem;font-weight:400;margin-bottom:7px;color:var(--ink);}
+.hl-desc{font-size:.74rem;line-height:1.8;color:var(--ink-sub);}
+.hl-credit{font-size:.6rem;color:var(--ink-light);margin-top:6px;}
+
+/* ━━━ FOOD GUIDE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.food-section{padding:96px 0;background:var(--bg-warm);}
+.food-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+.food-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+
+.food-card{
+  background:var(--bg);border:1px solid var(--bdr);border-radius:4px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 2px 16px rgba(29,45,62,.05);
+  transition:box-shadow .3s,transform .3s;
+}
+.food-card:hover{box-shadow:0 8px 32px rgba(29,45,62,.11);transform:translateY(-4px);}
+
+/* フードカード写真 */
+.food-img{position:relative;height:158px;overflow:hidden;flex-shrink:0;}
+.food-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block;}
+.food-card:hover .food-img img{transform:scale(1.06);}
+.food-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 28%,rgba(11,22,34,.70));
+  display:flex;align-items:flex-end;padding:11px 14px;
+  pointer-events:none;
+}
+.food-icon{font-size:1.7rem;line-height:1;}
+
+/* フードカード本文 */
+.food-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:7px;flex:1;}
+.food-category{font-size:.55rem;letter-spacing:.22em;color:var(--teal);font-weight:400;}
+.food-name{font-family:'Noto Serif JP',serif;font-size:1rem;font-weight:400;line-height:1.4;color:var(--ink);}
+.food-desc{font-size:.76rem;line-height:1.9;color:var(--ink-sub);flex:1;}
+
+/* ショップリンク */
+.food-shop{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding-top:10px;border-top:1px solid var(--bdr-soft);margin-top:2px;
+}
+.food-shop-label{
+  font-size:.54rem;letter-spacing:.16em;color:var(--teal);
+  background:rgba(42,139,140,.09);padding:3px 10px;
+  border-radius:100px;flex-shrink:0;font-weight:400;
+}
+.food-shop-link{
+  font-size:.72rem;color:var(--teal);text-decoration:none;
+  border-bottom:1px solid rgba(42,139,140,.26);padding-bottom:1px;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.food-shop-link:hover{color:var(--ink);border-color:var(--ink);}
+.food-shop-sep{
+  font-size:.65rem;color:var(--bdr);
+}
+.food-price{
+  font-family:'Cormorant Garamond',serif;font-size:.86rem;color:var(--sand);letter-spacing:.04em;
+}
+
+/* ━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+footer{padding:44px 72px;text-align:center;background:var(--bg-section);border-top:1px solid var(--bdr);}
+footer p{font-size:.72rem;color:var(--ink-sub);letter-spacing:.08em;margin-bottom:4px;}
+footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
+.footer-links{display:flex;gap:16px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+.footer-link{
+  font-size:.65rem;color:var(--teal);text-decoration:none;
+  border-bottom:1px solid rgba(42,139,140,.26);padding-bottom:2px;
+  transition:color .2s,border-color .2s;letter-spacing:.07em;
+}
+.footer-link:hover{color:var(--ink);border-color:var(--ink);}
+
+/* ━━━ LIGHTBOX ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#lightbox{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(11,22,34,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+}
+#lightbox.lb-open{opacity:1;pointer-events:all;}
+#lb-figure{
+  position:relative;max-width:90vw;max-height:90vh;
+  transform:scale(.92);transition:transform .3s ease;
+  display:flex;flex-direction:column;align-items:center;
+}
+#lightbox.lb-open #lb-figure{transform:scale(1);}
+#lb-img{display:block;max-width:88vw;max-height:78vh;object-fit:contain;border-radius:2px;}
+#lb-cap{color:rgba(244,240,232,.55);font-size:.72rem;letter-spacing:.06em;margin-top:14px;text-align:center;}
+#lb-close{
+  position:fixed;top:22px;right:26px;background:none;border:none;
+  color:#f4f0e8;font-size:1.5rem;cursor:pointer;opacity:.5;
+  transition:opacity .2s;z-index:9001;line-height:1;padding:4px;
+}
+#lb-close:hover{opacity:1;}
+#lb-prev,#lb-next{
+  position:fixed;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:#f4f0e8;
+  font-size:2.2rem;cursor:pointer;opacity:.35;z-index:9001;
+  transition:opacity .2s;padding:20px 14px;
+}
+#lb-prev{left:8px;}
+#lb-next{right:8px;}
+#lb-prev:hover,#lb-next:hover{opacity:1;}
+.lb-hidden{display:none!important;}
+
+/* ━━━ PLAN MODAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#plan-modal{
+  position:fixed;inset:0;z-index:8000;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+}
+#plan-modal.modal-open{opacity:1;pointer-events:all;}
+#modal-backdrop{
+  position:absolute;inset:0;
+  background:rgba(11,22,34,.70);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+#modal-box{
+  position:relative;z-index:1;background:var(--bg);
+  border:1px solid var(--bdr);border-radius:6px;
+  max-width:680px;width:92vw;max-height:88vh;overflow-y:auto;
+  padding:48px 44px 44px;
+  box-shadow:0 24px 64px rgba(11,22,34,.28);
+  transform:translateY(28px);transition:transform .35s ease;
+  scrollbar-width:thin;scrollbar-color:rgba(42,139,140,.3) transparent;
+}
+#plan-modal.modal-open #modal-box{transform:translateY(0);}
+#modal-box::-webkit-scrollbar{width:4px;}
+#modal-box::-webkit-scrollbar-track{background:transparent;}
+#modal-box::-webkit-scrollbar-thumb{background:rgba(42,139,140,.3);border-radius:2px;}
+#modal-close{
+  position:absolute;top:18px;right:18px;background:none;
+  border:none;color:var(--ink-sub);font-size:1.2rem;
+  cursor:pointer;transition:color .2s;line-height:1;padding:4px;
+}
+#modal-close:hover{color:var(--ink);}
+.modal-plan-tag{font-size:.58rem;letter-spacing:.22em;color:var(--teal);margin-bottom:9px;}
+.modal-plan-name{font-family:'Noto Serif JP',serif;font-size:1.35rem;font-weight:700;margin-bottom:7px;line-height:1.5;color:var(--ink);}
+.modal-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--foam);font-size:1rem;margin-bottom:32px;}
+.modal-sec{
+  font-size:.56rem;letter-spacing:.22em;color:var(--teal);
+  border-bottom:1px solid var(--bdr-soft);padding-bottom:8px;margin:28px 0 18px;
+}
+#modal-box .dot{background:var(--bg);}
+#modal-box .tl.hl .dot{background:var(--teal);}
+.modal-cost-table{width:100%;border-collapse:collapse;}
+.modal-cost-table td{
+  padding:10px 0;border-bottom:1px solid var(--bdr-soft);
+  font-size:.78rem;color:var(--ink-sub);line-height:1.4;
+}
+.modal-cost-table td:last-child{text-align:right;color:var(--sand);white-space:nowrap;padding-left:12px;}
+.modal-cost-total td{color:var(--ink)!important;font-family:'Noto Serif JP',serif;font-weight:700;border-bottom:none;}
+.modal-advice{list-style:none;margin:0;}
+.modal-advice li{
+  font-size:.78rem;line-height:1.95;color:var(--ink-sub);
+  margin-bottom:8px;padding-left:18px;position:relative;
+}
+.modal-advice li::before{content:'—';position:absolute;left:0;color:var(--teal);}
+.modal-links{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* ━━━ RESPONSIVE 768px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:768px){
+  .hero{padding:0 32px 56px;}
+  .scroll-hint{right:24px;}
+  .train-bar{padding:24px 32px;flex-direction:column;align-items:center;gap:0;}
+  .t-item{max-width:100%;width:100%;padding:16px 8px;}
+  .t-item+.t-item::before{left:0;top:0;height:1px;width:100%;}
+  .section{padding:72px 32px;}
+  .hl-inner,.food-inner{padding:0 32px;}
+  .hl-section,.food-section{padding:72px 0;}
+  .plan-card{grid-template-columns:1fr;min-height:unset;}
+  .plan-card:nth-child(even){direction:ltr;}
+  .plan-card:nth-child(even)>*{direction:ltr;}
+  .plan-photo{min-height:280px;}
+  .plan-body{padding:32px 28px;}
+  .hl-grid{grid-template-columns:repeat(2,1fr);}
+  .food-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:36px 32px;}
+  .snav-item{padding:12px 14px;font-size:.58rem;letter-spacing:.1em;}
+  #modal-box{padding:36px 28px 32px;}
+}
+
+/* ━━━ RESPONSIVE 480px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:480px){
+  .hero{padding:0 20px 44px;}
+  .section{padding:56px 20px;}
+  .hl-inner,.food-inner{padding:0 20px;}
+  .plan-body{padding:28px 20px;}
+  .hl-grid,.food-grid{grid-template-columns:1fr;}
+  footer{padding:28px 20px;}
+  .footer-links{gap:10px;}
+  .hero-info{gap:14px;}
+  .plans{gap:56px;}
+  .sec-head{margin-bottom:48px;}
+  #modal-box{padding:28px 20px 24px;width:96vw;}
+  .food-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ STICKY NAV ════════════ -->
+<nav id="sticky-nav" aria-label="プランナビゲーション">
+  <a href="#plan-1" class="snav-item">Plan 01</a>
+  <a href="#plan-2" class="snav-item">Plan 02</a>
+  <a href="#plan-3" class="snav-item">Plan 03</a>
+  <a href="#food" class="snav-item">食事</a>
+  <a href="#highlights" class="snav-item">見どころ</a>
+</nav>
+
+<!-- ════════════ HERO ════════════ -->
+<!-- 写真: Sunrise in Inubosaki © Guilhem Vellut / CC BY 2.0 / Wikimedia Commons -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Saturday, May 31 · 銚子一日旅</p>
+    <h1>波と灯台と<br><em>とびきりの寿司</em>と。</h1>
+    <div class="hero-info">
+      <span>柏 07:00 発 → 銚子 約 09:20 着</span>
+      <span>銚子 15:06 発 → 成田 16:26 着</span>
+    </div>
+  </div>
+  <p class="photo-credit">📷 犬吠埼の日の出 © Guilhem Vellut / CC BY 2.0 / Wikimedia Commons</p>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <p>SCROLL</p>
+  </div>
+</section>
+
+<!-- ════════════ TRAIN BAR ════════════ -->
+<div class="train-bar">
+  <div class="t-item">
+    <div class="t-label">▶ 往路</div>
+    <div class="t-route">柏 → 我孫子 → 成田 → 銚子</div>
+    <div class="t-time">07:00 発 ／ 約 09:20〜09:30 着（約2時間20分）</div>
+    <div class="t-links">
+      <a class="t-link" href="https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90" target="_blank" rel="noopener">Yahoo!乗換 柏→銚子</a>
+    </div>
+  </div>
+  <div class="t-item">
+    <div class="t-label">◀ 帰路</div>
+    <div class="t-route">銚子 → 成田（JR成田線）</div>
+    <div class="t-time">15:06 発 ／ 成田 16:26 着</div>
+    <div class="t-links">
+      <a class="t-link" href="https://transit.yahoo.co.jp/search/result?from=%E9%8A%9A%E5%AD%90&to=%E6%88%90%E7%94%B0" target="_blank" rel="noopener">Yahoo!乗換 銚子→成田</a>
+    </div>
+  </div>
+  <div class="t-item">
+    <div class="t-label">⚠ 注意</div>
+    <div class="t-route">Yahoo!乗換 or JR東日本アプリで確認を</div>
+    <div class="t-time">銚子電鉄は本数が少ないので要チェック</div>
+    <div class="t-links">
+      <a class="t-link" href="https://www.choshi-dentetsu.jp/timetable/" target="_blank" rel="noopener">銚子電鉄 時刻表</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PLANS ════════════ -->
+<div class="section">
+  <div class="sec-head">
+    <span class="sec-tag">3 Travel Plans</span>
+    <h2 class="sec-title">どのプランで行く？</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="plans">
+
+    <!-- ── PLAN 1 ── -->
+    <div id="plan-1" class="plan-card">
+      <div class="plan-photo">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Inubosaki_Lighthouse_2013-09C.JPG"
+             alt="犬吠埼灯台" loading="lazy">
+        <div class="plan-photo-overlay"></div>
+        <div class="plan-num">01</div>
+        <div class="plan-badge">王道コース</div>
+      </div>
+      <div class="plan-body">
+        <div>
+          <p class="plan-eyebrow">PLAN 01 · のんびり派</p>
+          <h3 class="plan-name">銚子電鉄に揺られて<br>灯台と海と丘を巡る</h3>
+          <p class="plan-tagline">"The classic, unhurried route."</p>
+          <p class="plan-desc">昭和の風情が残る銚子電鉄に乗って犬吠へ。国の重要文化財に指定された白亜の灯台をよじ登り、99段の先に広がる太平洋の絶景を独り占め。地球の丸さを実感できる展望台まで歩いたあとは、駅前の地元寿司屋でとびきりの地魚をどうぞ。</p>
+          <div class="timeline">
+            <div class="tl"><div class="tl-t">09:30</div><div class="dot"></div><div><div class="tl-title">銚子駅着・銚子電鉄に乗り換え <a class="map-link" href="https://maps.google.com/?q=35.7344,140.8271" target="_blank" rel="noopener">📍</a></div><div class="tl-note">改札すぐ隣に銚子電鉄のホーム</div></div></div>
+            <div class="tl hl"><div class="tl-t">10:00</div><div class="dot"></div><div><div class="tl-title">🏛 犬吠埼灯台 登頂！ <a class="map-link" href="https://maps.google.com/?q=35.7070,140.8698" target="_blank" rel="noopener">📍</a></div><div class="tl-note">99段の螺旋階段を登れば太平洋が一望。約50分</div></div></div>
+            <div class="tl"><div class="tl-t">10:50</div><div class="dot"></div><div><div class="tl-title">🌊 君ヶ浜海岸を散歩 <a class="map-link" href="https://maps.google.com/?q=35.7113,140.8728" target="_blank" rel="noopener">📍</a></div><div class="tl-note">断崖絶壁と荒波の迫力ある海岸線</div></div></div>
+            <div class="tl hl"><div class="tl-t">11:30</div><div class="dot"></div><div><div class="tl-title">🌏 地球の丸く見える丘展望館 <a class="map-link" href="https://maps.google.com/?q=35.7144,140.8597" target="_blank" rel="noopener">📍</a></div><div class="tl-note">徒歩15分。330度が水平線の絶景。大人420円</div></div></div>
+            <div class="tl"><div class="tl-t">12:15</div><div class="dot"></div><div><div class="tl-title">銚子電鉄 or バスで銚子駅へ</div><div class="tl-note">約25分</div></div></div>
+            <div class="tl hl"><div class="tl-t">13:00</div><div class="dot"></div><div><div class="tl-title">🍣 駅近の地元寿司でランチ <a class="map-link" href="https://maps.google.com/?q=35.7344,140.8271" target="_blank" rel="noopener">📍</a></div><div class="tl-note">銚子港直送の地魚握り。約2,000円でゆっくり90分</div></div></div>
+            <div class="tl"><div class="tl-t">15:06</div><div class="dot"></div><div><div class="tl-title">🚃 銚子発 → 成田へ</div><div class="tl-note">JR成田線 ／ 成田着 16:26</div></div></div>
+          </div>
+        </div>
+        <div class="thumb-row">
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/InubosakiLighthouse.JPG" alt="犬吠埼灯台" loading="lazy">
+            <div class="thumb-cap">犬吠埼灯台</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rising_sun_and_a_lighthouse_-_panoramio.jpg" alt="犬吠埼の海" loading="lazy">
+            <div class="thumb-cap">犬吠埼の海</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg" alt="銚子漁港" loading="lazy">
+            <div class="thumb-cap">銚子漁港</div>
+          </div>
+        </div>
+        <button class="plan-detail-btn" data-plan="1">詳細・費用・アドバイスを見る →</button>
+      </div>
+    </div>
+
+    <!-- ── PLAN 2 ── -->
+    <div id="plan-2" class="plan-card">
+      <div class="plan-photo">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg"
+             alt="銚子漁港" loading="lazy">
+        <div class="plan-photo-overlay"></div>
+        <div class="plan-num">02</div>
+        <div class="plan-badge">ローカル体験</div>
+      </div>
+      <div class="plan-body">
+        <div>
+          <p class="plan-eyebrow">PLAN 02 · 探検派</p>
+          <h3 class="plan-name">昭和の漁師町・外川から<br>海沿いを歩いて攻める</h3>
+          <p class="plan-tagline">"The hidden gem hunter's route."</p>
+          <p class="plan-desc">終点・外川まで銚子電鉄に乗り切る贅沢から始まる。映画ロケ地にもなった石畳の路地、潮の香りの漁港。海岸沿いを歩けば犬吠埼灯台が見えてくる。観光客の少ない時間に灯台と展望台を独占し、外川の漁師めしで〆るディープな一日。</p>
+          <div class="timeline">
+            <div class="tl"><div class="tl-t">09:30</div><div class="dot"></div><div><div class="tl-title">銚子駅着・銚子電鉄で終点・外川へ <a class="map-link" href="https://maps.google.com/?q=35.7344,140.8271" target="_blank" rel="noopener">📍</a></div><div class="tl-note">約25〜30分。車窓から太平洋が見える</div></div></div>
+            <div class="tl hl"><div class="tl-t">10:00</div><div class="dot"></div><div><div class="tl-title">⚓ 外川漁港 散策 <a class="map-link" href="https://maps.google.com/?q=35.6972,140.8672" target="_blank" rel="noopener">📍</a></div><div class="tl-note">昭和のまま時が止まった漁師町の路地裏へ</div></div></div>
+            <div class="tl"><div class="tl-t">10:30</div><div class="dot"></div><div><div class="tl-title">🚶 海沿いを徒歩で犬吠方面へ</div><div class="tl-note">外川→犬吠 徒歩約20分、海を見ながら</div></div></div>
+            <div class="tl hl"><div class="tl-t">11:00</div><div class="dot"></div><div><div class="tl-title">🏛 犬吠埼灯台 登頂！ <a class="map-link" href="https://maps.google.com/?q=35.7070,140.8698" target="_blank" rel="noopener">📍</a></div><div class="tl-note">99段のらせん階段を征服。高さ32mの絶景</div></div></div>
+            <div class="tl hl"><div class="tl-t">11:50</div><div class="dot"></div><div><div class="tl-title">🌏 地球の丸く見える丘展望館 <a class="map-link" href="https://maps.google.com/?q=35.7144,140.8597" target="_blank" rel="noopener">📍</a></div><div class="tl-note">大人420円で屋上から330度の水平線</div></div></div>
+            <div class="tl hl"><div class="tl-t">12:30</div><div class="dot"></div><div><div class="tl-title">🍣 外川駅そばの海鮮でランチ <a class="map-link" href="https://maps.google.com/?q=35.6989,140.8648" target="_blank" rel="noopener">📍</a></div><div class="tl-note">漁師町価格の回転寿司・海鮮丼</div></div></div>
+            <div class="tl"><div class="tl-t">13:30</div><div class="dot"></div><div><div class="tl-title">銚子電鉄で銚子駅に戻る</div><div class="tl-note">余裕たっぷりの帰還</div></div></div>
+            <div class="tl"><div class="tl-t">15:06</div><div class="dot"></div><div><div class="tl-title">🚃 銚子発 → 成田へ</div><div class="tl-note">JR成田線 ／ 成田着 16:26</div></div></div>
+          </div>
+        </div>
+        <div class="thumb-row">
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg" alt="外川漁港" loading="lazy">
+            <div class="thumb-cap">銚子漁港</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Electric_Railway_Line.JPG" alt="銚子電鉄" loading="lazy">
+            <div class="thumb-cap">銚子電鉄</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Inubosaki_Lighthouse_2013-09C.JPG" alt="灯台" loading="lazy">
+            <div class="thumb-cap">犬吠埼灯台</div>
+          </div>
+        </div>
+        <button class="plan-detail-btn" data-plan="2">詳細・費用・アドバイスを見る →</button>
+      </div>
+    </div>
+
+    <!-- ── PLAN 3 ── -->
+    <div id="plan-3" class="plan-card">
+      <div class="plan-photo">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rising_sun_and_a_lighthouse_-_panoramio.jpg"
+             alt="犬吠埼 朝日と灯台" loading="lazy">
+        <div class="plan-photo-overlay"></div>
+        <div class="plan-num">03</div>
+        <div class="plan-badge">食事優先</div>
+      </div>
+      <div class="plan-body">
+        <div>
+          <p class="plan-eyebrow">PLAN 03 · 食いしん坊派</p>
+          <h3 class="plan-name">まず寿司。それから<br>灯台と海に会いに行く。</h3>
+          <p class="plan-tagline">"Feed the soul first, then the eyes."</p>
+          <p class="plan-desc">銚子といえば、まず食べるべきは地魚の寿司。混む前の開店直後を狙い、ゆっくりたっぷり味わう。腹ごしらえ完了後、バスで犬吠埼へ向かえば食後の運動にちょうどいい99段が待っている。午後の光の中で海を独占する、最高の時間。</p>
+          <div class="timeline">
+            <div class="tl"><div class="tl-t">09:30</div><div class="dot"></div><div><div class="tl-title">銚子駅着・少し周辺をぶらり <a class="map-link" href="https://maps.google.com/?q=35.7344,140.8271" target="_blank" rel="noopener">📍</a></div><div class="tl-note">銚子漁港まで徒歩圏内</div></div></div>
+            <div class="tl hl"><div class="tl-t">10:00</div><div class="dot"></div><div><div class="tl-title">🍣 開店直後！名物寿司屋へ <a class="map-link" href="https://maps.google.com/?q=35.7340,140.8280" target="_blank" rel="noopener">📍</a></div><div class="tl-note">並ばず入れる黄金タイム。地魚握り・伊達巻き寿司を堪能</div></div></div>
+            <div class="tl"><div class="tl-t">11:30</div><div class="dot"></div><div><div class="tl-title">路線バスで犬吠埼へ出発</div><div class="tl-note">銚子駅から約25〜30分</div></div></div>
+            <div class="tl hl"><div class="tl-t">12:00</div><div class="dot"></div><div><div class="tl-title">🏛 犬吠埼灯台 登頂！ <a class="map-link" href="https://maps.google.com/?q=35.7070,140.8698" target="_blank" rel="noopener">📍</a></div><div class="tl-note">食後の99段は絶好の運動。頂上から見る海は格別</div></div></div>
+            <div class="tl hl"><div class="tl-t">12:50</div><div class="dot"></div><div><div class="tl-title">🌊 犬吠埼海岸でのんびり <a class="map-link" href="https://maps.google.com/?q=35.7070,140.8698" target="_blank" rel="noopener">📍</a></div><div class="tl-note">岩礁と太平洋の波を眺めながら潮風を浴びる</div></div></div>
+            <div class="tl hl"><div class="tl-t">13:30</div><div class="dot"></div><div><div class="tl-title">🌏 地球の丸く見える丘展望館 <a class="map-link" href="https://maps.google.com/?q=35.7144,140.8597" target="_blank" rel="noopener">📍</a></div><div class="tl-note">午後の光の中で見る360°パノラマ。最後の絶景</div></div></div>
+            <div class="tl"><div class="tl-t">14:15</div><div class="dot"></div><div><div class="tl-title">バスで銚子駅へ（約20分）</div><div class="tl-note">14:40頃着。余裕を持って乗車</div></div></div>
+            <div class="tl"><div class="tl-t">15:06</div><div class="dot"></div><div><div class="tl-title">🚃 銚子発 → 成田へ</div><div class="tl-note">JR成田線 ／ 成田着 16:26</div></div></div>
+          </div>
+        </div>
+        <div class="thumb-row">
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_in_Inubosaki_(9027196940).jpg" alt="犬吠埼の日の出" loading="lazy">
+            <div class="thumb-cap">犬吠埼の朝</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Inubosaki_Lighthouse_2013-09C.JPG" alt="灯台" loading="lazy">
+            <div class="thumb-cap">犬吠埼灯台</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg" alt="銚子漁港" loading="lazy">
+            <div class="thumb-cap">銚子漁港</div>
+          </div>
+        </div>
+        <button class="plan-detail-btn" data-plan="3">詳細・費用・アドバイスを見る →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════ FOOD GUIDE ════════════ -->
+<div id="food" class="food-section">
+  <div class="food-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Choshi Gourmet &amp; Omiyage</span>
+      <h2 class="sec-title">食べて、持ち帰る。銚子の味</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="food-grid">
+
+      <!-- 1. 地魚の握り寿司 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg"
+               alt="銚子漁港" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🍣</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">LOCAL SUSHI</div>
+          <div class="food-name">地魚の握り寿司</div>
+          <div class="food-desc">金目鯛・カツオ・ヤリイカなど、港直送の地魚が並ぶ。東京では出会えない旬の一貫が揃う。開店直後か、午後早めの時間帯が並ばず入れる黄金タイム。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">おすすめ</span>
+            <a class="food-shop-link" href="https://www.choushimaru.co.jp/" target="_blank" rel="noopener">銚子丸 公式サイト</a>
+            <span class="food-shop-sep">·</span>
+            <a class="food-shop-link" href="https://www.choshi-kankou.jp/" target="_blank" rel="noopener">銚子観光協会</a>
+          </div>
+          <div class="food-price">目安 ¥1,500 〜 2,500 / 人</div>
+        </div>
+      </div>
+
+      <!-- 2. ぬれ煎餅 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Electric_Railway_Line.JPG"
+               alt="銚子電鉄" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🍘</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">CHOSHI DENTETSU</div>
+          <div class="food-name">ぬれ煎餅</div>
+          <div class="food-desc">廃線危機のたびに全国の注文で乗り越えてきた、銚子電鉄の救世主。しっとりと醤油ダレが染みた食感は一度食べたら忘れられない。犬吠駅構内では焼きたてを味わえることも。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">購入・情報</span>
+            <a class="food-shop-link" href="https://www.choshi-dentetsu.jp/" target="_blank" rel="noopener">銚子電鉄 公式</a>
+          </div>
+          <div class="food-price">お土産 ¥500 前後〜 / 袋</div>
+        </div>
+      </div>
+
+      <!-- 3. 銚子の醤油 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Inubosaki_Lighthouse_2013-09C.JPG"
+               alt="犬吠埼灯台" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🫙</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">YAMASA / HIGETA</div>
+          <div class="food-name">銚子の醤油</div>
+          <div class="food-desc">創業1645年のヤマサ、同じく老舗のヒゲタ——日本を代表する2大醤油ブランドはどちらも銚子生まれ。限定ボトルや詰め合わせはお土産の定番中の定番。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">ブランド公式</span>
+            <a class="food-shop-link" href="https://www.yamasa.com/" target="_blank" rel="noopener">ヤマサ醤油</a>
+            <span class="food-shop-sep">·</span>
+            <a class="food-shop-link" href="https://www.higeta.co.jp/" target="_blank" rel="noopener">ヒゲタ醤油</a>
+          </div>
+          <div class="food-price">お土産 ¥800 〜 / 本</div>
+        </div>
+      </div>
+
+      <!-- 4. アジ・サンマの干物 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg"
+               alt="銚子漁港" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🐟</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">HIMONO</div>
+          <div class="food-name">アジ・サンマの干物</div>
+          <div class="food-desc">銚子港水揚げを浜で干した本物の味。漁港近くの鮮魚店や市場で購入でき、冷凍パックで持ち帰れる。食卓に開いた瞬間、銚子の潮風を思い出す。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">買い場</span>
+            <a class="food-shop-link" href="https://www.choshi-kankou.jp/" target="_blank" rel="noopener">銚子観光協会で確認</a>
+          </div>
+          <div class="food-price">目安 ¥600 〜 1,200 / 枚</div>
+        </div>
+      </div>
+
+      <!-- 5. いわし料理 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rising_sun_and_a_lighthouse_-_panoramio.jpg"
+               alt="犬吠埼の海" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🌊</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">IWASHI CUISINE</div>
+          <div class="food-name">いわし料理</div>
+          <div class="food-desc">全国屈指のいわし水揚げ量を誇る銚子ならではの一品。なめろう・つみれ汁・丸干しなど、素朴で滋味深い海の味。漁師町の食堂でぜひ頼んでほしい一皿。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">グルメ情報</span>
+            <a class="food-shop-link" href="https://www.choshi-kankou.jp/" target="_blank" rel="noopener">銚子市観光協会</a>
+          </div>
+          <div class="food-price">目安 ¥800 〜 1,500 / 品</div>
+        </div>
+      </div>
+
+      <!-- 6. クラフトビール -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_in_Inubosaki_(9027196940).jpg"
+               alt="犬吠埼の日の出" loading="lazy">
+          <div class="food-img-overlay"><span class="food-icon">🍺</span></div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">LOCAL CRAFT BEER</div>
+          <div class="food-name">銚子クラフトビール</div>
+          <div class="food-desc">地元産麦芽を使ったクラフトビール。犬吠埼の海を眺めながら飲む一杯は格別。犬吠埼周辺のカフェや土産店で提供されていることが多い。旅の締めくくりに。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">現地情報</span>
+            <a class="food-shop-link" href="https://www.choshi-kankou.jp/" target="_blank" rel="noopener">銚子市観光協会</a>
+          </div>
+          <div class="food-price">目安 ¥700 〜 1,000 / 杯</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ HIGHLIGHTS ════════════ -->
+<div id="highlights" class="hl-section">
+  <div class="hl-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Must-See Spots</span>
+      <h2 class="sec-title">銚子の魅力、全部入り</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="hl-grid">
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Inubosaki_Lighthouse_2013-09C.JPG" alt="犬吠埼灯台" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🏛</span>
+          <div class="hl-title">犬吠埼灯台</div>
+          <div class="hl-desc">明治7年築。99段の螺旋階段を登ると関東最東端から太平洋が一望。国の重要文化財。大人300円。</div>
+          <div class="hl-credit">📷 小石川人晃 / CC BY-SA 3.0 / Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_in_Inubosaki_(9027196940).jpg" alt="犬吠埼の日の出" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🌅</span>
+          <div class="hl-title">犬吠埼の絶景</div>
+          <div class="hl-desc">山頂・離島を除き日本で最も早く初日の出を見られる場所。朝の光の中で見る太平洋は言葉を失う美しさ。</div>
+          <div class="hl-credit">📷 Guilhem Vellut / CC BY 2.0 / Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rising_sun_and_a_lighthouse_-_panoramio.jpg" alt="灯台とパノラマ" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🌏</span>
+          <div class="hl-title">地球の丸く見える丘展望館</div>
+          <div class="hl-desc">標高90mから330度が水平線。本当に地球が丸く見える。大人420円。</div>
+          <div class="hl-credit">📷 Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Electric_Railway_Line.JPG" alt="銚子電鉄" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🚃</span>
+          <div class="hl-title">銚子電鉄</div>
+          <div class="hl-desc">廃線危機を何度も乗り越えてきた愛されローカル線。車窓から太平洋が見える。「ぬれ煎餅」も名物。</div>
+          <div class="hl-credit">📷 Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg" alt="銚子漁港" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">⚓</span>
+          <div class="hl-title">銚子漁港・外川漁港</div>
+          <div class="hl-desc">日本有数の水揚げ量を誇る銚子漁港。外川はレトロな漁師町で日本遺産にも認定された町並みが残る。</div>
+          <div class="hl-credit">📷 掬茶 / CC BY-SA 4.0 / Wikimedia Commons</div>
+        </div>
+      </div>
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg" alt="銚子の魚" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🍣</span>
+          <div class="hl-title">銚子の地魚寿司</div>
+          <div class="hl-desc">日本有数の漁港から直送。金目鯛、カツオ、ヤリイカ。2,000円前後でも大満足の地魚握りを。</div>
+          <div class="hl-credit">📷 掬茶 / CC BY-SA 4.0 / Wikimedia Commons</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <p>CHOSHI DAY TRIP · MAY 31, 2026 · 柏発 ← → 成田着</p>
+  <p>電車の時刻は必ずYahoo!乗換案内またはJR東日本アプリで当日確認してください</p>
+  <p class="credit-note">写真はすべてWikimedia Commons掲載の公開ライセンス画像（CC BY 2.0 / CC BY-SA 3.0・4.0）を使用しています</p>
+  <div class="footer-links">
+    <a class="footer-link" href="https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90" target="_blank" rel="noopener">Yahoo!乗換 柏→銚子</a>
+    <a class="footer-link" href="https://transit.yahoo.co.jp/search/result?from=%E9%8A%9A%E5%AD%90&to=%E6%88%90%E7%94%B0" target="_blank" rel="noopener">Yahoo!乗換 銚子→成田</a>
+    <a class="footer-link" href="https://www.choshi-dentetsu.jp/timetable/" target="_blank" rel="noopener">銚子電鉄 時刻表</a>
+    <a class="footer-link" href="https://www.jreast.co.jp/" target="_blank" rel="noopener">JR東日本</a>
+    <a class="footer-link" href="https://www.choshi-kankou.jp/" target="_blank" rel="noopener">銚子市観光協会</a>
+  </div>
+</footer>
+
+<!-- ════════════ LIGHTBOX ════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="画像拡大表示">
+  <button id="lb-close" aria-label="閉じる">✕</button>
+  <button id="lb-prev" aria-label="前の画像">&#10094;</button>
+  <button id="lb-next" aria-label="次の画像">&#10095;</button>
+  <figure id="lb-figure">
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<!-- ════════════ PLAN MODAL ════════════ -->
+<div id="plan-modal" role="dialog" aria-modal="true" aria-label="プラン詳細">
+  <div id="modal-backdrop"></div>
+  <div id="modal-box">
+    <button id="modal-close" aria-label="閉じる">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ── SCROLL LOCK ──────────────────────────────────────────────
+let _lockCount = 0;
+const lockScroll   = () => { if (!_lockCount++) document.body.style.overflow = 'hidden'; };
+const unlockScroll = () => { if (_lockCount > 0 && !--_lockCount) document.body.style.overflow = ''; };
+
+// ── PLAN CARD FADE-IN ────────────────────────────────────────
+const cards = document.querySelectorAll('.plan-card');
+const cardIO = new IntersectionObserver(
+  es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: .08 }
+);
+cards.forEach(c => cardIO.observe(c));
+
+// ── STICKY NAV ───────────────────────────────────────────────
+(function () {
+  const nav  = document.getElementById('sticky-nav');
+  const hero = document.querySelector('.hero');
+  if (!nav || !hero) return;
+  const heroIO = new IntersectionObserver(
+    ([e]) => nav.classList.toggle('nav-visible', !e.isIntersecting),
+    { threshold: 0 }
+  );
+  heroIO.observe(hero);
+})();
+
+// ── LIGHTBOX ─────────────────────────────────────────────────
+(function () {
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lb-img');
+  const lbCap   = document.getElementById('lb-cap');
+  const lbClose = document.getElementById('lb-close');
+  const lbPrev  = document.getElementById('lb-prev');
+  const lbNext  = document.getElementById('lb-next');
+  let group = [], idx = 0;
+
+  function openLb(src, alt, grp, i) {
+    lbImg.src = src; lbImg.alt = alt; lbCap.textContent = alt;
+    group = grp || []; idx = i ?? 0;
+    updateNav();
+    lb.classList.add('lb-open');
+    lockScroll();
+  }
+  function closeLb() {
+    lb.classList.remove('lb-open');
+    unlockScroll();
+    setTimeout(() => { lbImg.src = ''; }, 320);
+  }
+  function updateNav() {
+    lbPrev.classList.toggle('lb-hidden', group.length < 2 || idx === 0);
+    lbNext.classList.toggle('lb-hidden', group.length < 2 || idx === group.length - 1);
+  }
+  function navigate(dir) {
+    idx = Math.max(0, Math.min(group.length - 1, idx + dir));
+    lbImg.src = group[idx].src; lbImg.alt = group[idx].alt;
+    lbCap.textContent = group[idx].alt;
+    updateNav();
+  }
+
+  document.querySelectorAll('.plan-photo').forEach(ph => {
+    ph.addEventListener('click', () => {
+      const img = ph.querySelector('img');
+      if (img) openLb(img.src, img.alt, [], 0);
+    });
+  });
+
+  document.querySelectorAll('.hl-img img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => openLb(img.src, img.alt, [], 0));
+  });
+
+  document.querySelectorAll('.plan-card').forEach(card => {
+    const thumbImgs = Array.from(card.querySelectorAll('.thumb img'));
+    const grp = thumbImgs.map(i => ({ src: i.src, alt: i.alt }));
+    thumbImgs.forEach((img, i) => {
+      img.addEventListener('click', e => {
+        e.stopPropagation();
+        openLb(img.src, img.alt, grp, i);
+      });
+    });
+  });
+
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  lbPrev.addEventListener('click', () => navigate(-1));
+  lbNext.addEventListener('click', () => navigate(1));
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('lb-open')) return;
+    if (e.key === 'Escape')     { closeLb();    return; }
+    if (e.key === 'ArrowLeft')  { navigate(-1); return; }
+    if (e.key === 'ArrowRight') { navigate(1);  return; }
+  });
+})();
+
+// ── PLAN MODAL ───────────────────────────────────────────────
+(function () {
+  const PLAN_DATA = {
+    1: {
+      tag:     'PLAN 01 · のんびり派',
+      name:    '銚子電鉄に揺られて<br>灯台と海と丘を巡る',
+      tagline: '"The classic, unhurried route."',
+      timeline: [
+        { time:'09:30', title:'銚子駅着・銚子電鉄に乗り換え',   note:'改札すぐ隣に銚子電鉄のホーム',                           map:'https://maps.google.com/?q=35.7344,140.8271' },
+        { time:'10:00', title:'🏛 犬吠埼灯台 登頂！',          note:'99段の螺旋階段を登れば太平洋が一望。入場料300円。約50分', map:'https://maps.google.com/?q=35.7070,140.8698', hl:true },
+        { time:'10:50', title:'🌊 君ヶ浜海岸を散歩',           note:'断崖絶壁と荒波の迫力ある海岸線',                         map:'https://maps.google.com/?q=35.7113,140.8728' },
+        { time:'11:30', title:'🌏 地球の丸く見える丘展望館',    note:'徒歩15分。330度が水平線の絶景。大人420円',              map:'https://maps.google.com/?q=35.7144,140.8597', hl:true },
+        { time:'12:15', title:'銚子電鉄 or バスで銚子駅へ',    note:'約25分',                                              map:null },
+        { time:'13:00', title:'🍣 駅近の地元寿司でランチ',      note:'銚子港直送の地魚握り。約2,000円でゆっくり90分',           map:'https://maps.google.com/?q=35.7344,140.8271', hl:true },
+        { time:'15:06', title:'🚃 銚子発 → 成田へ',            note:'JR成田線 ／ 成田着 16:26',                            map:'https://maps.google.com/?q=35.7344,140.8271' },
+      ],
+      costs: [
+        ['JR 柏→銚子（往復）',         '約 ¥3,564'],
+        ['銚子電鉄 往復（銚子↔犬吠）',  '約 ¥540'],
+        ['犬吠埼灯台 入場料',            '¥300'],
+        ['地球の丸く見える丘 入場料',    '¥420'],
+        ['昼食（地魚寿司）',             '約 ¥2,000'],
+        ['その他（バス・雑費）',         '¥500 前後'],
+      ],
+      total: '約 ¥7,300（交通込み）',
+      links: [
+        { label:'銚子電鉄 時刻表',       href:'https://www.choshi-dentetsu.jp/timetable/' },
+        { label:'Yahoo!乗換 柏→銚子',   href:'https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90' },
+        { label:'Yahoo!乗換 銚子→成田', href:'https://transit.yahoo.co.jp/search/result?from=%E9%8A%9A%E5%AD%90&to=%E6%88%90%E7%94%B0' },
+      ],
+      advice: [
+        '銚子電鉄は1〜2時間に1本程度。出発前に必ず時刻確認を',
+        '犬吠埼灯台は強風時に登頂不可になることがあります',
+        '帰りの電車（15:06）は余裕を持って銚子駅に戻ること',
+        '5月末は晴天が多いが紫外線が強い。日焼け止め・帽子必携',
+      ],
+    },
+    2: {
+      tag:     'PLAN 02 · 探検派',
+      name:    '昭和の漁師町・外川から<br>海沿いを歩いて攻める',
+      tagline: '"The hidden gem hunter\'s route."',
+      timeline: [
+        { time:'09:30', title:'銚子駅着・銚子電鉄で終点・外川へ', note:'約25〜30分。車窓から太平洋が見える',                  map:'https://maps.google.com/?q=35.7344,140.8271' },
+        { time:'10:00', title:'⚓ 外川漁港 散策',                note:'昭和のまま時が止まった漁師町の路地裏へ',                map:'https://maps.google.com/?q=35.6972,140.8672', hl:true },
+        { time:'10:30', title:'🚶 海沿いを徒歩で犬吠方面へ',     note:'外川→犬吠 徒歩約20分、海を見ながら',                  map:null },
+        { time:'11:00', title:'🏛 犬吠埼灯台 登頂！',            note:'99段のらせん階段を征服。高さ32mの絶景',                map:'https://maps.google.com/?q=35.7070,140.8698', hl:true },
+        { time:'11:50', title:'🌏 地球の丸く見える丘展望館',      note:'大人420円で屋上から330度の水平線',                    map:'https://maps.google.com/?q=35.7144,140.8597', hl:true },
+        { time:'12:30', title:'🍣 外川駅そばの海鮮でランチ',      note:'漁師町価格の回転寿司・海鮮丼',                        map:'https://maps.google.com/?q=35.6989,140.8648', hl:true },
+        { time:'13:30', title:'銚子電鉄で銚子駅に戻る',           note:'余裕たっぷりの帰還',                                 map:null },
+        { time:'15:06', title:'🚃 銚子発 → 成田へ',              note:'JR成田線 ／ 成田着 16:26',                          map:'https://maps.google.com/?q=35.7344,140.8271' },
+      ],
+      costs: [
+        ['JR 柏→銚子（往復）',         '約 ¥3,564'],
+        ['銚子電鉄 往復（銚子↔外川）',  '約 ¥680'],
+        ['犬吠埼灯台 入場料',            '¥300'],
+        ['地球の丸く見える丘 入場料',    '¥420'],
+        ['昼食（海鮮丼・回転寿司）',     '約 ¥1,500'],
+        ['その他（雑費）',               '¥300 前後'],
+      ],
+      total: '約 ¥6,760（交通込み）',
+      links: [
+        { label:'銚子電鉄 時刻表',       href:'https://www.choshi-dentetsu.jp/timetable/' },
+        { label:'Yahoo!乗換 柏→銚子',   href:'https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90' },
+        { label:'Yahoo!乗換 銚子→成田', href:'https://transit.yahoo.co.jp/search/result?from=%E9%8A%9A%E5%AD%90&to=%E6%88%90%E7%94%B0' },
+      ],
+      advice: [
+        '外川→犬吠の徒歩（約20分）は海沿いの道。強風・高波の日は注意',
+        '銚子電鉄は本数が非常に少ない。必ず事前に時刻確認を',
+        '外川周辺は食事処が少ない。営業確認してから向かうこと',
+        '帰りの電車（15:06）は余裕を持って銚子駅に戻ること',
+      ],
+    },
+    3: {
+      tag:     'PLAN 03 · 食いしん坊派',
+      name:    'まず寿司。それから<br>灯台と海に会いに行く。',
+      tagline: '"Feed the soul first, then the eyes."',
+      timeline: [
+        { time:'09:30', title:'銚子駅着・少し周辺をぶらり',      note:'銚子漁港まで徒歩圏内',                                 map:'https://maps.google.com/?q=35.7344,140.8271' },
+        { time:'10:00', title:'🍣 開店直後！名物寿司屋へ',       note:'並ばず入れる黄金タイム。地魚握り・伊達巻き寿司を堪能', map:'https://maps.google.com/?q=35.7340,140.8280', hl:true },
+        { time:'11:30', title:'路線バスで犬吠埼へ出発',           note:'銚子駅から約25〜30分',                                map:null },
+        { time:'12:00', title:'🏛 犬吠埼灯台 登頂！',            note:'食後の99段は絶好の運動。頂上から見る海は格別',          map:'https://maps.google.com/?q=35.7070,140.8698', hl:true },
+        { time:'12:50', title:'🌊 犬吠埼海岸でのんびり',          note:'岩礁と太平洋の波を眺めながら潮風を浴びる',             map:'https://maps.google.com/?q=35.7070,140.8698' },
+        { time:'13:30', title:'🌏 地球の丸く見える丘展望館',      note:'午後の光の中で見る360°パノラマ。最後の絶景',          map:'https://maps.google.com/?q=35.7144,140.8597', hl:true },
+        { time:'14:15', title:'バスで銚子駅へ（約20分）',         note:'14:40頃着。余裕を持って乗車',                         map:null },
+        { time:'15:06', title:'🚃 銚子発 → 成田へ',              note:'JR成田線 ／ 成田着 16:26',                           map:'https://maps.google.com/?q=35.7344,140.8271' },
+      ],
+      costs: [
+        ['JR 柏→銚子（往復）',             '約 ¥3,564'],
+        ['路線バス 往復（銚子↔犬吠埼）',    '約 ¥1,000'],
+        ['朝食・地魚寿司',                  '約 ¥2,500'],
+        ['犬吠埼灯台 入場料',               '¥300'],
+        ['地球の丸く見える丘 入場料',       '¥420'],
+        ['その他（雑費）',                  '¥300 前後'],
+      ],
+      total: '約 ¥8,080（交通込み）',
+      links: [
+        { label:'銚子市 路線バス',       href:'https://www.city.choshi.chiba.jp/life/bus/bus.html' },
+        { label:'Yahoo!乗換 柏→銚子',   href:'https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90' },
+        { label:'Yahoo!乗換 銚子→成田', href:'https://transit.yahoo.co.jp/search/result?from=%E9%8A%9A%E5%AD%90&to=%E6%88%90%E7%94%B0' },
+      ],
+      advice: [
+        '路線バスは銚子駅前から乗車。時刻は市HPか現地で確認を',
+        '寿司屋は開店直後が狙い目。予約できる店は事前に確認を',
+        '灯台から展望館まで徒歩15分。帰りのバス時刻を念頭に',
+        '帰りの電車（15:06）を逃すと次は約1時間後。余裕を持って',
+      ],
+    },
+  };
+
+  const modal     = document.getElementById('plan-modal');
+  const backdrop  = document.getElementById('modal-backdrop');
+  const closeBtn  = document.getElementById('modal-close');
+  const content   = document.getElementById('modal-content');
+
+  function buildTimeline(items) {
+    return items.map(item => {
+      const mapLink = item.map
+        ? ` <a class="map-link" href="${item.map}" target="_blank" rel="noopener">📍</a>`
+        : '';
+      return `<div class="tl${item.hl ? ' hl' : ''}">
+        <div class="tl-t">${item.time}</div><div class="dot"></div>
+        <div>
+          <div class="tl-title">${item.title}${mapLink}</div>
+          <div class="tl-note">${item.note}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function buildCosts(costs, total) {
+    const rows = costs.map(([label, val]) =>
+      `<tr><td>${label}</td><td>${val}</td></tr>`
+    ).join('');
+    return `<table class="modal-cost-table">
+      ${rows}
+      <tr class="modal-cost-total"><td>合計目安</td><td>${total}</td></tr>
+    </table>`;
+  }
+
+  function openModal(planId) {
+    const d = PLAN_DATA[planId];
+    if (!d) return;
+    const linkBtns = d.links.map(l =>
+      `<a class="t-link" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`
+    ).join('');
+    const adviceItems = d.advice.map(a => `<li>${a}</li>`).join('');
+    content.innerHTML = `
+      <p class="modal-plan-tag">${d.tag}</p>
+      <h2 class="modal-plan-name">${d.name}</h2>
+      <p class="modal-tagline">${d.tagline}</p>
+      <p class="modal-sec">TIMELINE</p>
+      <div class="timeline">${buildTimeline(d.timeline)}</div>
+      <p class="modal-sec">費用目安</p>
+      ${buildCosts(d.costs, d.total)}
+      <p class="modal-sec">交通リンク</p>
+      <div class="modal-links">${linkBtns}</div>
+      <p class="modal-sec">注意・アドバイス</p>
+      <ul class="modal-advice">${adviceItems}</ul>
+    `;
+    modal.classList.add('modal-open');
+    lockScroll();
+  }
+
+  function closeModal() {
+    modal.classList.remove('modal-open');
+    unlockScroll();
+  }
+
+  document.querySelectorAll('.plan-detail-btn').forEach(btn => {
+    btn.addEventListener('click', () => openModal(Number(btn.dataset.plan)));
+  });
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('lightbox').classList.contains('lb-open')) return;
+    if (e.key === 'Escape' && modal.classList.contains('modal-open')) closeModal();
+  });
+})();
+</script>
+</body>
+</html>
