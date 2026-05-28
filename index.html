@@ -107,6 +107,16 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .photo-credit{position:absolute;bottom:8px;right:8px;font-size:.58rem;color:rgba(255,255,255,.28);z-index:3;}
+.hero-day2-link{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:28px;padding:10px 24px;
+  border:1px solid rgba(58,160,161,.45);
+  color:var(--foam);font-size:.72rem;letter-spacing:.14em;
+  text-decoration:none;border-radius:100px;
+  opacity:0;animation:fadeIn 1s 1s forwards;
+  transition:background .2s,border-color .2s;
+}
+.hero-day2-link:hover{background:rgba(58,160,161,.15);border-color:var(--foam);}
 
 /* ━━━ TRAIN BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .train-bar{
@@ -438,6 +448,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <span>銚子 15:06 発 → 成田 16:26 着</span>
       <span>成田泊 · マイステージプレミア成田</span>
     </div>
+    <a href="narita.html" class="hero-day2-link">2日目（成田・ゆめ牧場）のプランを見る →</a>
   </div>
   <p class="photo-credit">📷 犬吠埼の日の出 © Guilhem Vellut / CC BY 2.0 / Wikimedia Commons</p>
   <div class="scroll-hint">

@@ -58,7 +58,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
 }
 .hero-img{
   position:absolute;inset:0;
-  background:url('https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg') center 35%/cover no-repeat;
+  background:url('https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Shinshoji-Temple.Great-Main-Hall.jpg') center 35%/cover no-repeat;
   transform:scale(1.06);animation:slowZoom 18s ease-out forwards;
 }
 @keyframes slowZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
@@ -88,6 +88,16 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
   display:flex;align-items:center;gap:8px;
 }
 .hero-info span::before{content:'';display:block;width:16px;height:1px;background:var(--foam);}
+.hero-day1-link{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:28px;padding:10px 22px;
+  border:1px solid rgba(58,160,161,.45);
+  color:var(--foam);font-size:.72rem;letter-spacing:.14em;
+  text-decoration:none;border-radius:100px;
+  opacity:0;animation:fadeIn 1s 1s forwards;
+  transition:background .2s,border-color .2s;
+}
+.hero-day1-link:hover{background:rgba(58,160,161,.15);border-color:var(--foam);}
 .scroll-hint{
   position:absolute;bottom:36px;right:60px;z-index:2;
   display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -387,7 +397,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 </nav>
 
 <!-- ════════════ HERO ════════════ -->
-<!-- 写真: 成田山新勝寺 / Wikimedia Commons -->
+<!-- 写真: 成田山新勝寺 大本堂 / Wikimedia Commons CC BY-SA -->
 <section class="hero">
   <div class="hero-img"></div>
   <div class="hero-grad"></div>
@@ -398,8 +408,9 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <span>成田ゆめ牧場 → 成田山新勝寺</span>
       <span>成田 17:00 発 → 柏 17:50 着</span>
     </div>
+    <a href="index.html" class="hero-day1-link">← 1日目（銚子）のプランを見る</a>
   </div>
-  <p class="photo-credit">📷 成田山新勝寺 / Wikimedia Commons</p>
+  <p class="photo-credit">📷 成田山新勝寺 大本堂 / Wikimedia Commons</p>
   <div class="scroll-hint">
     <div class="scroll-line"></div>
     <p>SCROLL</p>
@@ -468,9 +479,9 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 
   <div class="day-card">
     <div class="day-card-inner">
-      <!-- 写真 -->
+      <!-- 写真: 成田山新勝寺 / Wikimedia Commons -->
       <div class="day-photo">
-        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Shinshoji-Temple-2008.jpg"
              alt="成田山新勝寺" loading="lazy">
         <div class="day-photo-overlay"></div>
         <div class="day-photo-badge">成田観光 2026.6.1</div>
@@ -543,7 +554,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
               <div class="tl-t">14:00</div>
               <div class="dot"></div>
               <div>
-                <div class="tl-title">🍱 成田山参道 で食べ歩き・昼食 <a class="map-link" href="https://maps.google.com/?q=35.7952,140.3180" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-title">🍱 成田山参道で食べ歩き・昼食 <a class="map-link" href="https://maps.google.com/?q=35.7952,140.3180" target="_blank" rel="noopener">📍</a></div>
                 <div class="tl-note">川豊・駿河屋などの鰻の名店。漬物・揚げ饅頭・なごみの米屋の羊羹も必見</div>
               </div>
             </div>
@@ -582,18 +593,21 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
           </div>
         </div>
 
-        <!-- サムネイル -->
+        <!-- サムネイル: 成田山写真（確認済みWikimedia Commonsファイル） -->
         <div class="thumb-row">
           <div class="thumb">
-            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg" alt="成田山新勝寺" loading="lazy">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Shinshoji-Temple-2008.jpg"
+                 alt="成田山新勝寺" loading="lazy">
             <div class="thumb-cap">成田山新勝寺</div>
           </div>
           <div class="thumb">
-            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita-san_three-storied_pagoda.jpg" alt="三重塔" loading="lazy">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Temple_beside_the_3_storied_pagoda.jpg"
+                 alt="三重塔" loading="lazy">
             <div class="thumb-cap">三重塔</div>
           </div>
           <div class="thumb">
-            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg" alt="成田山参道" loading="lazy">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Omotesando_to_Naritasan_Shinshoji_Temple_%40_Narita_%2815079327980%29.jpg"
+                 alt="成田山参道" loading="lazy">
             <div class="thumb-cap">成田山参道</div>
           </div>
         </div>
@@ -645,8 +659,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 鰻 -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
-               alt="成田山参道" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Unagi_rice.jpg"
+               alt="鰻飯" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🍱</span>
           </div>
@@ -668,8 +682,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 漬物 -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg"
-               alt="成田表参道" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tsukemono_dish.jpg"
+               alt="漬物" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🥒</span>
           </div>
@@ -677,7 +691,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
         <div class="food-body">
           <div class="food-category">千葉名物 · お土産</div>
           <div class="food-name">成田の漬物・醤油</div>
-          <div class="food-desc">成田山参道沿いには漬物店が並ぶ。大根・白菜・なすなど千葉野菜の漬物と、地元醤油を使った漬物は食べ歩きにも最適。お土産に最適。</div>
+          <div class="food-desc">成田山参道沿いには漬物店が並ぶ。大根・白菜・なすなど千葉野菜の漬物と、地元醤油を使った漬物は食べ歩きにも最適。</div>
           <div class="food-shop">
             <span class="food-shop-label">お土産に</span>
             <a href="https://www.nrtk.jp/" class="food-shop-link" target="_blank" rel="noopener">成田市観光協会</a>
@@ -689,8 +703,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 牧場グルメ -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg"
-               alt="牧場" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Yume_Bokujo_01.JPG"
+               alt="成田ゆめ牧場" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🍦</span>
           </div>
@@ -710,8 +724,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 羊羹 -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
-               alt="成田山" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Somon_201203.jpg"
+               alt="成田山総門" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🍡</span>
           </div>
@@ -731,8 +745,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 落花生 -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg"
-               alt="千葉" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Dream_Dairy_Farm.jpg"
+               alt="成田ゆめ牧場" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🥜</span>
           </div>
@@ -752,8 +766,8 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <!-- 揚げ饅頭 -->
       <div class="food-card">
         <div class="food-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg"
-               alt="参道の食べ歩き" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Omotesando_to_Naritasan_Shinshoji_Temple_%40_Narita_%2815079327980%29.jpg"
+               alt="成田山参道" loading="lazy">
           <div class="food-img-overlay">
             <span class="food-icon">🍢</span>
           </div>
@@ -787,7 +801,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Shinshoji-Temple.Great-Main-Hall.jpg"
                alt="成田山新勝寺 大本堂" loading="lazy">
         </div>
         <div class="hl-body">
@@ -799,7 +813,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita-san_three-storied_pagoda.jpg"
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Temple_beside_the_3_storied_pagoda.jpg"
                alt="成田山三重塔" loading="lazy">
         </div>
         <div class="hl-body">
@@ -811,49 +825,49 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
-               alt="成田山参道" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Omotesando_to_Naritasan_Shinshoji_Temple_%40_Narita_%2815079327980%29.jpg"
+               alt="成田山表参道" loading="lazy">
         </div>
         <div class="hl-body">
           <span class="hl-icon">🛍</span>
           <div class="hl-title">成田山表参道 — 800m の食と工芸</div>
-          <div class="hl-desc">JR成田駅から成田山まで続く約800mの参道。鰻屋・漬物店・和菓子屋・民芸品店が軒を連ねる。江戸時代の面影を残す古い町並みと現代の食が共存する。ぶらぶら歩くだけで成田の文化を体感できる。</div>
+          <div class="hl-desc">JR成田駅から成田山まで続く約800mの参道。鰻屋・漬物店・和菓子屋・民芸品店が軒を連ねる。江戸時代の面影を残す古い町並みと現代の食が共存する。</div>
         </div>
       </div>
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg"
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Yume_Bokujo_01.JPG"
                alt="成田ゆめ牧場" loading="lazy">
         </div>
         <div class="hl-body">
           <span class="hl-icon">🐄</span>
           <div class="hl-title">成田ゆめ牧場 — 牧場体験</div>
-          <div class="hl-desc">成田市内に広がる観光牧場。牛・馬・羊・うさぎなどとふれあえる動物広場、バター・チーズ作り体験、乗馬体験など盛りだくさん。JR成田駅から無料送迎バスで約30分。手ぶらで気軽に訪れられる。</div>
+          <div class="hl-desc">成田市内に広がる観光牧場。牛・馬・羊・うさぎなどとふれあえる動物広場、バター・チーズ作り体験、乗馬体験など盛りだくさん。JR成田駅から無料送迎バスで約30分。</div>
         </div>
       </div>
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
-               alt="成田山霊光館" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Park_%40_Naritasan_Shinshoji_Temple_%40_Narita_%2815242536636%29.jpg"
+               alt="成田山公園" loading="lazy">
         </div>
         <div class="hl-body">
           <span class="hl-icon">🏛</span>
-          <div class="hl-title">成田山霊光館・書院</div>
+          <div class="hl-title">成田山公園・書院庭園</div>
           <div class="hl-desc">成田山開基1080年を記念して建てられた霊光館では、寺の歴史や文化財を展示。国指定名勝の書院庭園は、松・池・石灯籠が織りなす格調ある空間。時間があれば足を延ばす価値がある。</div>
         </div>
       </div>
 
       <div class="hl-card">
         <div class="hl-img">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Electric_Railway_Line.JPG"
-               alt="成田空港" loading="lazy">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_International_Airport_Terminal_1.JPG"
+               alt="成田国際空港" loading="lazy">
         </div>
         <div class="hl-body">
           <span class="hl-icon">✈</span>
           <div class="hl-title">成田空港 — 旅の玄関口</div>
-          <div class="hl-desc">成田市は日本最大の国際空港・成田空港のお膝元。第1〜第3ターミナルの展望デッキから離着陸を眺めるのも楽しい。もし時間があれば国際線ロビーのショッピングゾーンも見どころ（セキュリティ外のエリアのみ）。</div>
+          <div class="hl-desc">成田市は日本最大の国際空港・成田空港のお膝元。第1〜第3ターミナルの展望デッキから離着陸を眺めるのも楽しい。もし時間があれば国際線ロビーのショッピングゾーンも見どころ。</div>
         </div>
       </div>
 
