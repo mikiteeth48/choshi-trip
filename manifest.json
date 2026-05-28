@@ -1,0 +1,11 @@
+{
+  "name": "銚子旅行プラン 2026",
+  "short_name": "銚子旅行",
+  "description": "柏発・銚子→成田 2日間旅行ガイド",
+  "start_url": "/choshi-trip/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2a8b8c",
+  "lang": "ja",
+  "icons": []
+}

@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>銚子旅行プラン 2026 · 柏発 日帰りガイド</title>
+<!-- OGP / SNS -->
+<meta property="og:title" content="銚子旅行プラン 2026 — 柏発 日帰りガイド">
+<meta property="og:description" content="5月30日(土)、銚子へ。犬吠埼灯台・銚子電鉄・地魚寿司の充実日帰りプラン。">
+<meta property="og:url" content="https://mikiteeth48.github.io/choshi-trip/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Sunrise_in_Inubosaki_(9027196940).jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2a8b8c">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DESIGN SYSTEM — 白ベース・旅行ガイドブック風
@@ -421,6 +435,223 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   #modal-box{padding:28px 20px 24px;width:96vw;}
   .food-grid{grid-template-columns:1fr;}
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DARK MODE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+[data-theme="dark"]{
+  --bg:#0f1923;--bg-warm:#131e2a;--bg-section:#0b1320;
+  --ink:#e8e0d0;--ink-sub:rgba(232,224,208,.58);--ink-light:rgba(232,224,208,.36);
+  --bdr:rgba(232,224,208,.12);--bdr-soft:rgba(232,224,208,.07);
+}
+[data-theme="dark"] #sticky-nav{background:rgba(13,22,32,.96);}
+[data-theme="dark"] .plan-body,[data-theme="dark"] .food-card,[data-theme="dark"] .hl-body,
+[data-theme="dark"] #modal-box,[data-theme="dark"] .cost-box-wrapper,
+[data-theme="dark"] .hours-card,[data-theme="dark"] .rainy-card,
+[data-theme="dark"] .checklist-group,[data-theme="dark"] .booking-card,
+[data-theme="dark"] .calc-result-item,[data-theme="dark"] .calc-box{background:var(--bg-warm);}
+[data-theme="dark"] .hl-card{background:var(--bg-warm);}
+[data-theme="dark"] .booking-note-input,[data-theme="dark"] .booking-status-select,
+[data-theme="dark"] .calc-input,[data-theme="dark"] .album-url-input{
+  background:var(--bg);color:var(--ink);border-color:var(--bdr);
+}
+
+/* ━━━ FONT SIZE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+html{font-size:15px;transition:font-size .2s;}
+html.fs-s{font-size:13px;}
+html.fs-l{font-size:17px;}
+
+/* ━━━ NAV CONTROLS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav-controls{display:flex;align-items:stretch;border-left:1px solid var(--bdr-soft);margin-left:auto;}
+.nav-ctrl-btn{
+  padding:0 13px;background:none;border:none;border-right:1px solid var(--bdr-soft);
+  color:var(--ink-sub);cursor:pointer;font-size:.7rem;letter-spacing:.04em;
+  transition:color .2s,background .2s;white-space:nowrap;display:flex;align-items:center;
+}
+.nav-ctrl-btn:last-child{border-right:none;}
+.nav-ctrl-btn:hover,.nav-ctrl-btn.active{color:var(--teal);background:rgba(42,139,140,.06);}
+
+/* ━━━ COUNTDOWN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.countdown-chip{
+  display:inline-flex;align-items:center;gap:10px;margin-top:20px;
+  background:rgba(42,139,140,.14);backdrop-filter:blur(8px);
+  border:1px solid rgba(58,160,161,.30);border-radius:100px;
+  padding:8px 20px;
+  opacity:0;animation:fadeIn 1s 1.2s forwards;
+}
+.countdown-chip span{font-size:.68rem;letter-spacing:.1em;color:var(--hero-muted);}
+.countdown-chip strong{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--foam);margin:0 2px;}
+
+/* ━━━ CURRENT-TIME HIGHLIGHT ━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tl.tl-now .dot{background:var(--foam)!important;box-shadow:0 0 0 4px rgba(58,160,161,.25);}
+.tl.tl-now .tl-title{color:var(--foam);}
+.tl.tl-now::after{
+  content:'▶ NOW';position:absolute;right:0;top:4px;
+  font-size:.52rem;letter-spacing:.14em;color:var(--foam);
+  background:rgba(58,160,161,.12);padding:2px 8px;border-radius:100px;
+}
+
+/* ━━━ WEATHER BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.weather-bar{
+  background:var(--bg-section);border-bottom:1px solid var(--bdr);
+  padding:24px 72px;display:flex;align-items:flex-start;justify-content:center;
+  gap:40px;flex-wrap:wrap;
+}
+.weather-item{text-align:center;flex:1;min-width:110px;max-width:170px;}
+.weather-icon{font-size:1.7rem;margin-bottom:5px;}
+.weather-label{font-size:.54rem;letter-spacing:.18em;color:var(--teal);margin-bottom:3px;font-weight:400;}
+.weather-val{font-family:'Noto Serif JP',serif;font-size:.85rem;color:var(--ink);margin-bottom:3px;}
+.weather-note{font-size:.65rem;color:var(--ink-sub);line-height:1.55;}
+
+/* ━━━ SECTION COMMON (for new sections) ━━━━━━━━━━━━━━ */
+.new-section{padding:80px 0;}
+.new-section-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+@media(max-width:768px){
+  .new-section-inner{padding:0 32px;}
+  .weather-bar{padding:20px 32px;gap:20px;}
+}
+@media(max-width:480px){
+  .new-section-inner{padding:0 20px;}
+  .weather-bar{padding:16px 20px;}
+}
+
+/* ━━━ PLAN COMPARISON ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.compare-wrap{overflow-x:auto;margin-top:48px;}
+.compare-table{width:100%;min-width:540px;border-collapse:collapse;}
+.compare-table th,.compare-table td{
+  padding:13px 16px;border:1px solid var(--bdr-soft);
+  font-size:.76rem;line-height:1.5;vertical-align:middle;
+}
+.compare-table th{background:rgba(42,139,140,.09);color:var(--teal);font-size:.62rem;letter-spacing:.14em;font-weight:400;text-align:center;}
+.compare-table td:first-child{color:var(--ink-sub);font-size:.72rem;white-space:nowrap;}
+.compare-table td:not(:first-child){text-align:center;}
+[data-theme="dark"] .compare-table th{background:rgba(42,139,140,.18);}
+[data-theme="dark"] .compare-table tr:nth-child(even) td{background:rgba(255,255,255,.03);}
+.compare-pill{display:inline-block;font-size:.58rem;letter-spacing:.1em;padding:3px 11px;border-radius:100px;}
+.pill-easy{background:rgba(42,139,140,.14);color:var(--teal);}
+.pill-deep{background:rgba(158,108,42,.14);color:var(--sand);}
+.pill-food{background:rgba(180,80,80,.12);color:#a04040;}
+.compare-check{color:var(--teal);font-size:1rem;}
+.compare-x{color:var(--ink-light);}
+
+/* ━━━ MAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#trip-map{height:460px;border-radius:6px;border:1px solid var(--bdr);margin-top:32px;}
+.map-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.map-geo-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 18px;border:1px solid rgba(42,139,140,.38);border-radius:100px;
+  background:none;color:var(--teal);font-size:.68rem;letter-spacing:.08em;
+  cursor:pointer;transition:background .2s,color .2s;
+}
+.map-geo-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.map-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.64rem;color:var(--ink-sub);}
+.map-legend span{display:flex;align-items:center;gap:5px;}
+
+/* ━━━ RAINY DAY PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.rainy-tabs{display:flex;gap:0;margin-top:40px;border-bottom:2px solid var(--bdr-soft);}
+.rainy-tab{
+  padding:10px 22px;background:none;border:none;
+  font-size:.64rem;letter-spacing:.12em;color:var(--ink-sub);
+  cursor:pointer;position:relative;transition:color .2s;
+}
+.rainy-tab.active{color:var(--teal);}
+.rainy-tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--teal);}
+.rainy-panel{display:none;padding:28px 0;}
+.rainy-panel.active{display:block;}
+.rainy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.rainy-card{padding:20px;border:1px solid var(--bdr-soft);border-radius:4px;background:var(--bg-warm);}
+.rainy-card-title{font-family:'Noto Serif JP',serif;font-size:.88rem;margin-bottom:7px;color:var(--ink);}
+.rainy-card-desc{font-size:.73rem;line-height:1.85;color:var(--ink-sub);}
+@media(max-width:600px){.rainy-grid{grid-template-columns:1fr;}}
+
+/* ━━━ CHECKLIST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.checklist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;}
+.checklist-group{background:var(--bg-warm);border:1px solid var(--bdr-soft);border-radius:4px;padding:20px;}
+.checklist-group-title{font-size:.58rem;letter-spacing:.18em;color:var(--teal);margin-bottom:12px;font-weight:400;}
+.check-item{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;cursor:pointer;}
+.check-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--teal);cursor:pointer;flex-shrink:0;margin-top:2px;}
+.check-item label{font-size:.74rem;color:var(--ink-sub);cursor:pointer;line-height:1.5;}
+.check-item.checked label{text-decoration:line-through;color:var(--ink-light);}
+.checklist-actions{display:flex;gap:10px;margin-top:24px;align-items:center;flex-wrap:wrap;}
+.checklist-progress{font-size:.68rem;color:var(--ink-sub);}
+.checklist-reset{font-size:.62rem;color:var(--ink-light);background:none;border:1px solid var(--bdr);padding:4px 12px;border-radius:100px;cursor:pointer;transition:color .2s,border-color .2s;}
+.checklist-reset:hover{color:var(--teal);border-color:var(--teal);}
+@media(max-width:768px){.checklist-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.checklist-grid{grid-template-columns:1fr;}}
+
+/* ━━━ BOOKING TRACKER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.booking-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px;}
+.booking-card{background:var(--bg-warm);border:1px solid var(--bdr-soft);border-radius:4px;padding:20px;display:flex;flex-direction:column;gap:10px;}
+.booking-title{font-family:'Noto Serif JP',serif;font-size:.88rem;color:var(--ink);}
+.booking-select{font-size:.64rem;padding:5px 10px;border:1px solid var(--bdr);border-radius:100px;background:var(--bg);color:var(--ink);cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.booking-status-pill{display:inline-flex;align-items:center;gap:5px;font-size:.62rem;letter-spacing:.06em;padding:4px 12px;border-radius:100px;width:fit-content;}
+.status-ok{background:rgba(42,139,140,.14);color:var(--teal);}
+.status-ng{background:rgba(180,60,60,.12);color:#b03030;}
+.status-todo{background:rgba(158,108,42,.14);color:var(--sand);}
+.booking-memo{font-size:.7rem;padding:7px 10px;border:1px solid var(--bdr);border-radius:3px;background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif;resize:none;height:44px;width:100%;}
+@media(max-width:768px){.booking-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.booking-grid{grid-template-columns:1fr;}}
+
+/* ━━━ COST CALCULATOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.calc-box{background:var(--bg-warm);border:1px solid var(--bdr);border-radius:6px;padding:36px;margin-top:44px;max-width:780px;margin-left:auto;margin-right:auto;}
+.calc-intro{font-size:.76rem;color:var(--ink-sub);margin-bottom:24px;line-height:1.8;}
+.calc-people-row{display:flex;align-items:center;gap:16px;margin-bottom:28px;flex-wrap:wrap;}
+.calc-people-label{font-size:.72rem;color:var(--ink-sub);}
+.calc-people-input{font-family:'Cormorant Garamond',serif;font-size:1.4rem;padding:6px 12px;border:1px solid var(--bdr);border-radius:3px;width:70px;text-align:center;background:var(--bg);color:var(--ink);}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
+.calc-result-item{padding:16px;background:var(--bg);border:1px solid var(--bdr-soft);border-radius:4px;text-align:center;}
+.calc-result-label{font-size:.56rem;letter-spacing:.14em;color:var(--teal);margin-bottom:6px;}
+.calc-result-val{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--sand);}
+@media(max-width:600px){.calc-results{grid-template-columns:1fr 1fr;}}
+
+/* ━━━ OPERATING HOURS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hours-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px;}
+.hours-card{background:var(--bg-warm);border:1px solid var(--bdr-soft);border-radius:4px;padding:20px;}
+.hours-name{font-family:'Noto Serif JP',serif;font-size:.9rem;margin-bottom:12px;color:var(--ink);padding-bottom:8px;border-bottom:1px solid var(--bdr-soft);}
+.hours-row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--ink-sub);padding:5px 0;border-bottom:1px solid var(--bdr-soft);}
+.hours-row:last-child{border-bottom:none;}
+.hours-pill{font-size:.6rem;padding:2px 9px;border-radius:100px;}
+.pill-open{background:rgba(42,139,140,.12);color:var(--teal);}
+.pill-trip{background:rgba(42,139,140,.22);color:var(--teal);font-weight:700;}
+.pill-closed{background:rgba(180,60,60,.10);color:#b03030;}
+@media(max-width:600px){.hours-grid{grid-template-columns:1fr;}}
+
+/* ━━━ MEMORY ALBUM ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.album-note{text-align:center;font-size:.76rem;color:var(--ink-sub);max-width:480px;margin:12px auto 28px;line-height:1.8;}
+.album-input-row{display:flex;gap:9px;max-width:620px;margin:0 auto 28px;}
+.album-url-input{flex:1;padding:9px 13px;border:1px solid var(--bdr);border-radius:3px;background:var(--bg);color:var(--ink);font-size:.74rem;font-family:'Noto Sans JP',sans-serif;}
+.album-add-btn{padding:9px 18px;background:var(--teal);color:#fff;border:none;border-radius:3px;font-size:.7rem;cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.album-add-btn:hover{opacity:.82;}
+.album-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:860px;margin:0 auto;}
+.album-photo{aspect-ratio:1;overflow:hidden;border-radius:3px;position:relative;cursor:zoom-in;}
+.album-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.album-photo:hover img{transform:scale(1.08);}
+.album-photo-del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.5);color:#fff;border:none;width:22px;height:22px;border-radius:50%;font-size:.65rem;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;}
+.album-photo:hover .album-photo-del{display:flex;}
+.album-empty{text-align:center;padding:44px 20px;color:var(--ink-light);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;}
+@media(max-width:600px){.album-grid{grid-template-columns:repeat(3,1fr);}}
+
+/* ━━━ SHARE BUTTONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:100px;font-size:.66rem;letter-spacing:.08em;text-decoration:none;cursor:pointer;border:none;transition:opacity .2s;}
+.share-btn:hover{opacity:.82;}
+.share-line{background:#06c755;color:#fff;}
+.share-x{background:#000;color:#fff;}
+.share-copy{background:var(--bg-section);color:var(--ink-sub);border:1px solid var(--bdr);}
+#copy-msg{font-size:.62rem;color:var(--teal);display:none;}
+
+/* ━━━ PRINT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media print{
+  #sticky-nav,.scroll-hint,.hero-day2-link,.countdown-chip,.plan-detail-btn,
+  .nav-controls,.share-row,.map-section-wrap,.album-section-wrap,
+  .booking-section-wrap,.calc-section-wrap,.rainy-section-wrap,
+  .hours-section-wrap,#lightbox,#plan-modal,.weather-bar{display:none!important;}
+  body{font-size:11pt;color:#000;}
+  .hero{height:32vh;min-height:unset;}
+  .plan-card,.hl-card,.food-card{break-inside:avoid;box-shadow:none!important;border:1px solid #ccc!important;}
+  *{animation:none!important;transition:none!important;}
+  a[href]::after{content:none;}
+}
 </style>
 </head>
 <body>
@@ -433,6 +664,12 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   <a href="#food" class="snav-item">食事</a>
   <a href="#highlights" class="snav-item">見どころ</a>
   <a href="narita.html" class="snav-item" style="color:var(--teal);font-weight:400;">2日目（成田）→</a>
+  <div class="nav-controls">
+    <button class="nav-ctrl-btn" id="dark-toggle" title="ダークモード">🌙</button>
+    <button class="nav-ctrl-btn fs-btn active" data-size="m" title="標準">A</button>
+    <button class="nav-ctrl-btn fs-btn" data-size="s" title="小さく">A−</button>
+    <button class="nav-ctrl-btn fs-btn" data-size="l" title="大きく">A＋</button>
+  </div>
 </nav>
 
 <!-- ════════════ HERO ════════════ -->
@@ -441,7 +678,7 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   <div class="hero-img"></div>
   <div class="hero-grad"></div>
   <div class="hero-content">
-    <p class="eyebrow">Saturday, May 31 · 銚子一日旅</p>
+    <p class="eyebrow">Saturday, May 30 · 銚子一日旅</p>
     <h1>波と灯台と<br><em>とびきりの寿司</em>と。</h1>
     <div class="hero-info">
       <span>柏 07:00 発 → 銚子 約 09:20 着</span>
@@ -449,6 +686,9 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <span>成田泊 · マイステージプレミア成田</span>
     </div>
     <a href="narita.html" class="hero-day2-link">2日目（成田・ゆめ牧場）のプランを見る →</a>
+    <div class="countdown-chip" id="countdown-chip">
+      <strong id="countdown-days">—</strong><span>日後に出発</span>
+    </div>
   </div>
   <p class="photo-credit">📷 犬吠埼の日の出 © Guilhem Vellut / CC BY 2.0 / Wikimedia Commons</p>
   <div class="scroll-hint">
@@ -483,6 +723,15 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <a class="t-link" href="https://www.choshi-dentetsu.jp/timetable/" target="_blank" rel="noopener">銚子電鉄 時刻表</a>
     </div>
   </div>
+</div>
+
+<!-- ════════════ WEATHER BAR ════════════ -->
+<div class="weather-bar">
+  <div class="weather-item"><div class="weather-icon">🌤</div><div class="weather-label">5月末の天気</div><div class="weather-val">晴れ時々曇り</div><div class="weather-note">降水確率 約25〜35%。急な夕立に注意</div></div>
+  <div class="weather-item"><div class="weather-icon">🌡</div><div class="weather-label">気温</div><div class="weather-val">最高 24〜27℃</div><div class="weather-note">最低 16〜18℃。朝晩は少し涼しい</div></div>
+  <div class="weather-item"><div class="weather-icon">👕</div><div class="weather-label">服装</div><div class="weather-val">薄手・重ね着</div><div class="weather-note">Tシャツ＋薄手のカーディガン。海風が強い日は羽織り物必携</div></div>
+  <div class="weather-item"><div class="weather-icon">🌊</div><div class="weather-label">海風・紫外線</div><div class="weather-val">強風 注意</div><div class="weather-note">犬吠埼は常に海風あり。日焼け止め・帽子必携</div></div>
+  <div class="weather-item"><div class="weather-icon">☂</div><div class="weather-label">雨対策</div><div class="weather-val">折りたたみ傘</div><div class="weather-note">コンパクト傘を必ず持参。灯台は雨天でも入場可</div></div>
 </div>
 
 <!-- ════════════ PLANS ════════════ -->
@@ -840,6 +1089,318 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   </div>
 </div>
 
+<!-- ════════════ PLAN COMPARISON ════════════ -->
+<div style="background:var(--bg-section);padding:80px 0;">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Plan Comparison</span>
+      <h2 class="sec-title">3つのプランを比べる</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>Plan 01<br><span class="compare-pill pill-easy">のんびり派</span></th>
+            <th>Plan 02<br><span class="compare-pill pill-deep">探検派</span></th>
+            <th>Plan 03<br><span class="compare-pill pill-food">食いしん坊</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>移動手段</td><td>銚子電鉄＋徒歩</td><td>銚子電鉄＋徒歩</td><td>路線バス</td></tr>
+          <tr><td>難易度（体力）</td><td>★★☆</td><td>★★★</td><td>★☆☆</td></tr>
+          <tr><td>犬吠埼灯台</td><td class="compare-check">✓</td><td class="compare-check">✓</td><td class="compare-check">✓</td></tr>
+          <tr><td>外川漁港散策</td><td class="compare-x">—</td><td class="compare-check">✓</td><td class="compare-x">—</td></tr>
+          <tr><td>地球の丸く見える丘</td><td class="compare-check">✓</td><td class="compare-check">✓</td><td class="compare-check">✓</td></tr>
+          <tr><td>ランチ形式</td><td>地魚寿司（駅近）</td><td>海鮮丼（外川）</td><td>地魚寿司（開店直後）</td></tr>
+          <tr><td>概算費用</td><td>約 ¥7,300</td><td>約 ¥6,760</td><td>約 ¥8,080</td></tr>
+          <tr><td>おすすめタイプ</td><td>初めての銚子</td><td>ディープ探索好き</td><td>グルメ優先</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MAP ════════════ -->
+<div class="new-section map-section-wrap" style="background:var(--bg-warm);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Spot Map</span>
+      <h2 class="sec-title">銚子エリアマップ</h2>
+      <div class="deco-line"></div>
+      <p style="font-size:.74rem;color:var(--ink-sub);margin-top:14px;line-height:1.8;">全スポットの位置を地図で確認。「現在地を表示」ボタンで自分の場所との距離もわかります。</p>
+    </div>
+    <div id="trip-map"></div>
+    <div class="map-controls">
+      <button class="map-geo-btn" id="map-geo-btn">📍 現在地を表示</button>
+      <div class="map-legend">
+        <span>🔵 観光スポット</span>
+        <span>🟢 グルメ</span>
+        <span>🚉 交通</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ OPERATING HOURS ════════════ -->
+<div class="new-section hours-section-wrap" style="background:var(--bg);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Hours &amp; Access</span>
+      <h2 class="sec-title">営業時間・アクセス</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-card">
+        <div class="hours-name">🏛 犬吠埼灯台</div>
+        <div class="hours-row"><span>開館時間</span><span>08:30〜17:00（最終入場 16:30）</span></div>
+        <div class="hours-row"><span>旅行当日 (5/30)</span><span><span class="hours-pill pill-trip">開館</span></span></div>
+        <div class="hours-row"><span>入場料</span><span>大人 ¥300</span></div>
+        <div class="hours-row"><span>休館日</span><span>無休（荒天時閉鎖あり）</span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">🌏 地球の丸く見える丘展望館</div>
+        <div class="hours-row"><span>開館時間</span><span>08:30〜17:00（最終入館 16:30）</span></div>
+        <div class="hours-row"><span>旅行当日 (5/30)</span><span><span class="hours-pill pill-trip">開館</span></span></div>
+        <div class="hours-row"><span>入場料</span><span>大人 ¥420</span></div>
+        <div class="hours-row"><span>休館日</span><span>第3月曜（月祝の場合翌火）</span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">🚃 銚子電鉄（運行時間帯）</div>
+        <div class="hours-row"><span>始発</span><span>銚子 06:09 頃</span></div>
+        <div class="hours-row"><span>終電</span><span>銚子 20:24 頃</span></div>
+        <div class="hours-row"><span>本数</span><span>約 1〜2時間に 1本 ※要確認</span></div>
+        <div class="hours-row"><span>時刻表</span><span><a href="https://www.choshi-dentetsu.jp/timetable/" target="_blank" rel="noopener" style="color:var(--teal);">公式サイト</a></span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">⚓ 外川漁港・君ヶ浜海岸</div>
+        <div class="hours-row"><span>見学</span><span>常時自由（入場料なし）</span></div>
+        <div class="hours-row"><span>旅行当日</span><span><span class="hours-pill pill-trip">いつでも OK</span></span></div>
+        <div class="hours-row"><span>注意</span><span>強風・高波の日は接近注意</span></div>
+        <div class="hours-row"><span>所要</span><span>各 30〜60分</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ RAINY DAY PLAN ════════════ -->
+<div class="new-section rainy-section-wrap" style="background:var(--bg-section);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Rainy Day Plan</span>
+      <h2 class="sec-title">雨の日プラン</h2>
+      <div class="deco-line"></div>
+      <p style="font-size:.74rem;color:var(--ink-sub);margin-top:14px;">万が一雨でも楽しめる代替プランです。</p>
+    </div>
+    <div class="rainy-tabs">
+      <button class="rainy-tab active" data-tab="light">小雨・曇り</button>
+      <button class="rainy-tab" data-tab="heavy">本降り・嵐</button>
+    </div>
+    <div class="rainy-panel active" id="rainy-light">
+      <div class="rainy-grid">
+        <div class="rainy-card">
+          <div class="rainy-card-title">🏛 犬吠埼灯台は雨天 OK</div>
+          <div class="rainy-card-desc">小雨程度なら灯台内部の観覧は可能。灯台の白が雨に濡れると一層美しく見える。強風・雷の場合のみ登頂中止。傘またはレインウェア持参で楽しめる。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🫙 ヤマサ醤油工場見学</div>
+          <div class="rainy-card-desc">1645年創業のヤマサ醤油は工場見学を実施（事前予約推奨）。醤油の製造工程を見学でき、雨の日の屋内コンテンツとして最適。試食・限定商品の購入も。所要 約60分。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🍜 銚子市内の飲食店でのんびり</div>
+          <div class="rainy-card-desc">雨なら無理に移動せず、銚子駅周辺の食堂や寿司屋でゆっくり食事を楽しむ時間に充てる。早めに入店してカウンターで地魚を堪能するのも贅沢な過ごし方。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🛍 ぬれ煎餅工房・お土産探し</div>
+          <div class="rainy-card-desc">銚子電鉄の犬吠駅構内では晴雨問わずぬれ煎餅を販売・焼きたて提供。銚子駅周辺のお土産屋を巡って醤油・干物・菓子類を選ぶのも雨天の楽しみ方。</div>
+        </div>
+      </div>
+    </div>
+    <div class="rainy-panel" id="rainy-heavy">
+      <div class="rainy-grid">
+        <div class="rainy-card">
+          <div class="rainy-card-title">🏠 成田のホテルでゆっくり休む</div>
+          <div class="rainy-card-desc">本降りの場合、銚子観光は縮小して早めに成田へ移動し、ホテルでゆっくり。翌日の成田観光に備えて体力温存するのも賢い選択。チェックインが早い場合は荷物だけ預ける。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🎌 成田山新勝寺に前倒し参拝</div>
+          <div class="rainy-card-desc">悪天候で銚子観光が困難な場合、1日目から成田山を楽しむ手も。成田山は雨の日でも参道の屋根付き区間で食べ歩きが楽しめる。鰻を早めに堪能しよう。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🏟 イオンモール銚子でショッピング</div>
+          <div class="rainy-card-desc">銚子駅から徒歩圏にある大型ショッピングモール。雨でも快適に過ごせる屋内施設。フードコートで地元グルメを楽しみながら時間を過ごせる。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">📱 プランを翌日に組み替える</div>
+          <div class="rainy-card-desc">天気予報をこまめに確認し、晴れる時間帯に合わせてプランを柔軟に変更。午後から晴れるなら午前は食事＋ショッピング、午後に灯台という組み合わせもあり。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ CHECKLIST ════════════ -->
+<div class="new-section" style="background:var(--bg-warm);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Packing Checklist</span>
+      <h2 class="sec-title">持ち物チェックリスト</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="checklist-grid" id="checklist-root">
+      <div class="checklist-group">
+        <div class="checklist-group-title">BASICS · 基本</div>
+        <label class="check-item"><input type="checkbox" data-key="cl0"><label>財布・現金・交通系 IC カード</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl1"><label>スマートフォン・充電器</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl2"><label>モバイルバッテリー</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl3"><label>身分証</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl4"><label>宿泊施設の予約確認（印刷 or スクショ）</label></label>
+      </div>
+      <div class="checklist-group">
+        <div class="checklist-group-title">OUTDOOR · 外出用</div>
+        <label class="check-item"><input type="checkbox" data-key="cl5"><label>折りたたみ傘</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl6"><label>日焼け止め（SPF50以上推奨）</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl7"><label>帽子・サングラス</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl8"><label>歩きやすいシューズ</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl9"><label>羽織り物（海風対策）</label></label>
+      </div>
+      <div class="checklist-group">
+        <div class="checklist-group-title">OPTIONAL · あると便利</div>
+        <label class="check-item"><input type="checkbox" data-key="cl10"><label>カメラ・充電ケーブル</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl11"><label>エコバッグ（お土産用）</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl12"><label>常備薬・絆創膏</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl13"><label>水筒・ペットボトル</label></label>
+        <label class="check-item"><input type="checkbox" data-key="cl14"><label>このページ（オフライン用スクショ）</label></label>
+      </div>
+    </div>
+    <div class="checklist-actions">
+      <span class="checklist-progress" id="cl-progress">0 / 15 チェック済み</span>
+      <button class="checklist-reset" id="cl-reset">リセット</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ BOOKING TRACKER ════════════ -->
+<div class="new-section booking-section-wrap" style="background:var(--bg);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Reservation Tracker</span>
+      <h2 class="sec-title">予約状況トラッカー</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="booking-grid">
+      <div class="booking-card">
+        <div class="booking-title">🚃 往路 JR 柏→銚子</div>
+        <select class="booking-select" data-bkey="b0">
+          <option value="todo">未確認</option>
+          <option value="ok">予約済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m0" placeholder="メモ（出発時刻など）"></textarea>
+      </div>
+      <div class="booking-card">
+        <div class="booking-title">🏨 ホテル マイステージプレミア成田</div>
+        <select class="booking-select" data-bkey="b1">
+          <option value="todo">未確認</option>
+          <option value="ok">予約済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m1" placeholder="メモ（確認番号など）"></textarea>
+      </div>
+      <div class="booking-card">
+        <div class="booking-title">🍣 ランチ 寿司屋</div>
+        <select class="booking-select" data-bkey="b2">
+          <option value="todo">未確認</option>
+          <option value="ok">予約済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m2" placeholder="メモ（店名・時間など）"></textarea>
+      </div>
+      <div class="booking-card">
+        <div class="booking-title">🏛 犬吠埼灯台 入場</div>
+        <select class="booking-select" data-bkey="b3">
+          <option value="todo">未確認</option>
+          <option value="ok">確認済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m3" placeholder="メモ（営業時間確認など）"></textarea>
+      </div>
+      <div class="booking-card">
+        <div class="booking-title">🚃 帰路 JR 銚子→成田</div>
+        <select class="booking-select" data-bkey="b4">
+          <option value="todo">未確認</option>
+          <option value="ok">確認済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m4" placeholder="メモ（15:06発 → 16:26着）"></textarea>
+      </div>
+      <div class="booking-card">
+        <div class="booking-title">📦 その他・自由メモ</div>
+        <select class="booking-select" data-bkey="b5">
+          <option value="todo">未確認</option>
+          <option value="ok">確認済み ✓</option>
+          <option value="ng">要対応 !</option>
+        </select>
+        <textarea class="booking-memo" data-mkey="m5" placeholder="自由にメモ"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ COST CALCULATOR ════════════ -->
+<div class="new-section calc-section-wrap" style="background:var(--bg-warm);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Cost Calculator</span>
+      <h2 class="sec-title">費用分割計算機</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="calc-box">
+      <p class="calc-intro">プランの概算費用を人数で割り勘計算できます。交通費は往復 ¥3,564 を含む目安です。</p>
+      <div class="calc-people-row">
+        <span class="calc-people-label">人数：</span>
+        <input type="number" class="calc-people-input" id="calc-people" value="2" min="1" max="20">
+        <span class="calc-people-label">人で旅行</span>
+      </div>
+      <div class="calc-results">
+        <div class="calc-result-item">
+          <div class="calc-result-label">PLAN 01 · 1人あたり</div>
+          <div class="calc-result-val" id="calc-r1">—</div>
+        </div>
+        <div class="calc-result-item">
+          <div class="calc-result-label">PLAN 02 · 1人あたり</div>
+          <div class="calc-result-val" id="calc-r2">—</div>
+        </div>
+        <div class="calc-result-item">
+          <div class="calc-result-label">PLAN 03 · 1人あたり</div>
+          <div class="calc-result-val" id="calc-r3">—</div>
+        </div>
+      </div>
+      <p style="font-size:.62rem;color:var(--ink-light);margin-top:16px;">※ 目安金額のみ。実際の費用は出費内容により異なります。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MEMORY ALBUM ════════════ -->
+<div class="new-section album-section-wrap" style="background:var(--bg-section);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Memory Album</span>
+      <h2 class="sec-title">思い出フォトアルバム</h2>
+      <div class="deco-line"></div>
+    </div>
+    <p class="album-note">旅行後に撮った写真の URL を貼り付けると、ここにアルバムが作れます。Google フォト・Flickr などの公開リンクが使えます。</p>
+    <div class="album-input-row">
+      <input type="url" class="album-url-input" id="album-url" placeholder="https://... 画像URLを貼り付け">
+      <button class="album-add-btn" id="album-add">追加 ＋</button>
+    </div>
+    <div class="album-grid" id="album-grid">
+      <div class="album-empty" id="album-empty">旅行後の写真をここに追加しましょう 📷</div>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════ DAY 2 CTA ════════════ -->
 <div style="background:var(--ink);padding:44px 72px;text-align:center;">
   <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--foam);letter-spacing:.18em;margin-bottom:12px;">Day 2 · Narita</p>
@@ -850,9 +1411,15 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
 
 <!-- ════════════ FOOTER ════════════ -->
 <footer>
-  <p>CHOSHI DAY TRIP · MAY 31, 2026 · 柏発 ← → 成田着</p>
+  <p>CHOSHI DAY TRIP · MAY 30, 2026 · 柏発 ← → 成田着</p>
   <p>電車の時刻は必ずYahoo!乗換案内またはJR東日本アプリで当日確認してください</p>
   <p class="credit-note">写真はすべてWikimedia Commons掲載の公開ライセンス画像（CC BY 2.0 / CC BY-SA 3.0・4.0）を使用しています</p>
+  <div class="share-row">
+    <a class="share-btn share-line" id="share-line" href="#" target="_blank" rel="noopener">LINE でシェア</a>
+    <a class="share-btn share-x" id="share-x" href="#" target="_blank" rel="noopener">𝕏 でシェア</a>
+    <button class="share-btn share-copy" id="share-copy">🔗 URLをコピー</button>
+    <span id="copy-msg">コピーしました！</span>
+  </div>
   <div class="footer-links">
     <a class="footer-link" href="narita.html">2日目（成田）→</a>
     <a class="footer-link" href="https://transit.yahoo.co.jp/search/result?from=%E6%9F%8F&to=%E9%8A%9A%E5%AD%90" target="_blank" rel="noopener">Yahoo!乗換 柏→銚子</a>
@@ -1154,6 +1721,247 @@ cards.forEach(c => cardIO.observe(c));
     if (document.getElementById('lightbox').classList.contains('lb-open')) return;
     if (e.key === 'Escape' && modal.classList.contains('modal-open')) closeModal();
   });
+})();
+
+// ── DARK MODE ─────────────────────────────────────────────────
+(function () {
+  const btn = document.getElementById('dark-toggle');
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+})();
+
+// ── FONT SIZE ─────────────────────────────────────────────────
+(function () {
+  const sizes = { s: 'fs-s', m: '', l: 'fs-l' };
+  const saved = localStorage.getItem('fs') || 'm';
+  applyFs(saved);
+  document.querySelectorAll('.fs-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.size === saved);
+    b.addEventListener('click', () => {
+      applyFs(b.dataset.size);
+      localStorage.setItem('fs', b.dataset.size);
+      document.querySelectorAll('.fs-btn').forEach(x => x.classList.toggle('active', x === b));
+    });
+  });
+  function applyFs(s) {
+    document.documentElement.className = document.documentElement.className.replace(/fs-[sl]/g, '').trim();
+    if (sizes[s]) document.documentElement.classList.add(sizes[s]);
+  }
+})();
+
+// ── COUNTDOWN ─────────────────────────────────────────────────
+(function () {
+  const chip = document.getElementById('countdown-chip');
+  const daysEl = document.getElementById('countdown-days');
+  const trip = new Date('2026-05-30T00:00:00');
+  function update() {
+    const now = new Date();
+    const diff = Math.ceil((trip - now) / 86400000);
+    if (diff > 0) {
+      daysEl.textContent = diff;
+    } else if (diff === 0) {
+      daysEl.textContent = '今日';
+      chip.querySelector('span').textContent = 'が旅行当日！';
+    } else {
+      chip.style.display = 'none';
+    }
+  }
+  update();
+})();
+
+// ── CURRENT TIME TIMELINE HIGHLIGHT ───────────────────────────
+(function () {
+  const now = new Date();
+  const hhmm = now.getHours() * 100 + now.getMinutes();
+  document.querySelectorAll('.tl').forEach(row => {
+    const tEl = row.querySelector('.tl-t');
+    if (!tEl) return;
+    const txt = tEl.textContent.trim().replace(':', '');
+    const t = parseInt(txt, 10);
+    if (!isNaN(t) && Math.abs(hhmm - t) <= 30) row.classList.add('tl-now');
+  });
+})();
+
+// ── LEAFLET MAP ───────────────────────────────────────────────
+(function () {
+  if (typeof L === 'undefined' || !document.getElementById('trip-map')) return;
+  const map = L.map('trip-map').setView([35.7100, 140.858], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+  const spots = [
+    { name:'銚子駅', lat:35.7344, lng:140.8271, type:'transit', note:'JR総武本線・銚子電鉄の始発駅' },
+    { name:'犬吠埼灯台', lat:35.7070, lng:140.8698, type:'sight', note:'99段の螺旋階段・太平洋一望。大人¥300' },
+    { name:'地球の丸く見える丘展望館', lat:35.7144, lng:140.8597, type:'sight', note:'330度の水平線パノラマ。大人¥420' },
+    { name:'君ヶ浜海岸', lat:35.7113, lng:140.8728, type:'sight', note:'断崖と荒波の絶景海岸' },
+    { name:'外川漁港', lat:35.6972, lng:140.8672, type:'sight', note:'昭和の漁師町・日本遺産' },
+    { name:'銚子漁港', lat:35.7344, lng:140.8180, type:'food', note:'日本有数の水揚げ量' },
+    { name:'銚子電鉄 犬吠駅', lat:35.7081, lng:140.8628, type:'transit', note:'ぬれ煎餅が買える駅' },
+    { name:'ヤマサ醤油', lat:35.7340, lng:140.8150, type:'food', note:'創業1645年。工場見学あり（要予約）' },
+  ];
+
+  const colors = { sight:'#2a8b8c', food:'#4caf50', transit:'#1565c0' };
+  spots.forEach(s => {
+    const icon = L.divIcon({
+      html: `<div style="background:${colors[s.type]};width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>`,
+      className: '', iconSize: [12, 12], iconAnchor: [6, 6]
+    });
+    L.marker([s.lat, s.lng], { icon })
+      .addTo(map)
+      .bindPopup(`<strong>${s.name}</strong><br><span style="font-size:12px;color:#555">${s.note}</span>`);
+  });
+
+  document.getElementById('map-geo-btn').addEventListener('click', () => {
+    if (!navigator.geolocation) { alert('位置情報が利用できません'); return; }
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      const youIcon = L.divIcon({
+        html: '<div style="background:#e53935;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(229,57,53,.5)"></div>',
+        className: '', iconSize: [14, 14], iconAnchor: [7, 7]
+      });
+      L.marker([lat, lng], { icon: youIcon }).addTo(map).bindPopup('<strong>現在地</strong>').openPopup();
+      map.setView([lat, lng], 14);
+    }, () => alert('位置情報の取得に失敗しました。ブラウザの設定を確認してください。'));
+  });
+})();
+
+// ── RAINY DAY TABS ────────────────────────────────────────────
+document.querySelectorAll('.rainy-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.rainy-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.rainy-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('rainy-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── CHECKLIST ─────────────────────────────────────────────────
+(function () {
+  const total = 15;
+  const progressEl = document.getElementById('cl-progress');
+  function load() {
+    document.querySelectorAll('[data-key]').forEach(cb => {
+      const v = localStorage.getItem(cb.dataset.key) === '1';
+      cb.checked = v;
+      cb.closest('.check-item').classList.toggle('checked', v);
+    });
+    updateProgress();
+  }
+  function updateProgress() {
+    const done = document.querySelectorAll('[data-key]:checked').length;
+    progressEl.textContent = `${done} / ${total} チェック済み`;
+  }
+  document.querySelectorAll('[data-key]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      localStorage.setItem(cb.dataset.key, cb.checked ? '1' : '0');
+      cb.closest('.check-item').classList.toggle('checked', cb.checked);
+      updateProgress();
+    });
+  });
+  document.getElementById('cl-reset').addEventListener('click', () => {
+    document.querySelectorAll('[data-key]').forEach(cb => {
+      cb.checked = false;
+      localStorage.removeItem(cb.dataset.key);
+      cb.closest('.check-item').classList.remove('checked');
+    });
+    updateProgress();
+  });
+  load();
+})();
+
+// ── BOOKING TRACKER ───────────────────────────────────────────
+(function () {
+  document.querySelectorAll('[data-bkey]').forEach(sel => {
+    const k = sel.dataset.bkey;
+    sel.value = localStorage.getItem(k) || 'todo';
+    sel.addEventListener('change', () => localStorage.setItem(k, sel.value));
+  });
+  document.querySelectorAll('[data-mkey]').forEach(ta => {
+    const k = ta.dataset.mkey;
+    ta.value = localStorage.getItem(k) || '';
+    ta.addEventListener('input', () => localStorage.setItem(k, ta.value));
+  });
+})();
+
+// ── COST CALCULATOR ───────────────────────────────────────────
+(function () {
+  const base = [7300, 6760, 8080];
+  const input = document.getElementById('calc-people');
+  function calc() {
+    const n = Math.max(1, parseInt(input.value) || 1);
+    [1, 2, 3].forEach(i => {
+      document.getElementById('calc-r' + i).textContent = '¥' + Math.round(base[i-1] / n).toLocaleString('ja-JP');
+    });
+  }
+  input.addEventListener('input', calc);
+  calc();
+})();
+
+// ── SHARE BUTTONS ─────────────────────────────────────────────
+(function () {
+  const url = encodeURIComponent(location.href);
+  const text = encodeURIComponent('銚子旅行プラン 2026 — 柏発 日帰りガイド');
+  document.getElementById('share-line').href = 'https://social-plugins.line.me/lineit/share?url=' + url;
+  document.getElementById('share-x').href = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + text;
+  document.getElementById('share-copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const msg = document.getElementById('copy-msg');
+      msg.style.display = 'inline';
+      setTimeout(() => { msg.style.display = 'none'; }, 2000);
+    });
+  });
+})();
+
+// ── MEMORY ALBUM ──────────────────────────────────────────────
+(function () {
+  const grid = document.getElementById('album-grid');
+  const empty = document.getElementById('album-empty');
+  const urlInput = document.getElementById('album-url');
+  const addBtn = document.getElementById('album-add');
+  let photos = JSON.parse(localStorage.getItem('album') || '[]');
+
+  function render() {
+    grid.innerHTML = '';
+    if (!photos.length) { grid.appendChild(empty); return; }
+    photos.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'album-photo';
+      div.innerHTML = `<img src="${src}" alt="思い出写真${i+1}" loading="lazy"><button class="album-photo-del" data-i="${i}" title="削除">✕</button>`;
+      div.querySelector('img').addEventListener('click', () => {
+        document.getElementById('lb-img').src = src;
+        document.getElementById('lb-cap').textContent = `思い出写真 ${i+1}`;
+        document.getElementById('lightbox').classList.add('lb-open');
+        lockScroll();
+      });
+      div.querySelector('.album-photo-del').addEventListener('click', e => {
+        e.stopPropagation();
+        photos.splice(i, 1);
+        localStorage.setItem('album', JSON.stringify(photos));
+        render();
+      });
+      grid.appendChild(div);
+    });
+  }
+
+  addBtn.addEventListener('click', () => {
+    const src = urlInput.value.trim();
+    if (!src) return;
+    photos.push(src);
+    localStorage.setItem('album', JSON.stringify(photos));
+    urlInput.value = '';
+    render();
+  });
+  urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') addBtn.click(); });
+  render();
 })();
 </script>
 </body>

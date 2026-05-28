@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>成田観光プラン 2026 · 2日目 ゆめ牧場 &amp; 成田山</title>
+<!-- OGP -->
+<meta property="og:title" content="成田観光プラン 2026 — 2日目 ゆめ牧場 &amp; 成田山">
+<meta property="og:description" content="5月31日(日)、成田へ。ゆめ牧場の朝から成田山参道の鰻まで、2日目の充実プラン。">
+<meta property="og:url" content="https://mikiteeth48.github.io/choshi-trip/narita.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan-Shinshoji-Temple.Great-Main-Hall.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2a8b8c">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DESIGN SYSTEM — index.html と共通
@@ -384,6 +398,116 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   .sec-head{margin-bottom:48px;}
   .thumb-row{grid-template-columns:repeat(2,1fr);}
 }
+
+/* ━━━ DARK MODE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+[data-theme="dark"]{
+  --bg:#0f1923;--bg-warm:#131e2a;--bg-section:#0b1320;
+  --ink:#e8e0d0;--ink-sub:rgba(232,224,208,.58);--ink-light:rgba(232,224,208,.36);
+  --bdr:rgba(232,224,208,.12);--bdr-soft:rgba(232,224,208,.07);
+}
+[data-theme="dark"] #sticky-nav{background:rgba(13,22,32,.96);}
+[data-theme="dark"] .day-body,[data-theme="dark"] .food-card,[data-theme="dark"] .hl-body,
+[data-theme="dark"] .hl-card,[data-theme="dark"] .cost-box,
+[data-theme="dark"] .rainy-card,[data-theme="dark"] .hours-card{background:var(--bg-warm);}
+
+/* ━━━ FONT SIZE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+html{font-size:15px;transition:font-size .2s;}
+html.fs-s{font-size:13px;}
+html.fs-l{font-size:17px;}
+
+/* ━━━ NAV CONTROLS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav-controls{display:flex;align-items:stretch;border-left:1px solid var(--bdr-soft);margin-left:auto;}
+.nav-ctrl-btn{
+  padding:0 13px;background:none;border:none;border-right:1px solid var(--bdr-soft);
+  color:var(--ink-sub);cursor:pointer;font-size:.7rem;letter-spacing:.04em;
+  transition:color .2s,background .2s;white-space:nowrap;display:flex;align-items:center;
+}
+.nav-ctrl-btn:last-child{border-right:none;}
+.nav-ctrl-btn:hover,.nav-ctrl-btn.active{color:var(--teal);background:rgba(42,139,140,.06);}
+
+/* ━━━ COUNTDOWN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.countdown-chip{
+  display:inline-flex;align-items:center;gap:10px;margin-top:20px;
+  background:rgba(42,139,140,.14);backdrop-filter:blur(8px);
+  border:1px solid rgba(58,160,161,.30);border-radius:100px;
+  padding:8px 20px;
+  opacity:0;animation:fadeIn 1s 1.2s forwards;
+}
+.countdown-chip span{font-size:.68rem;letter-spacing:.1em;color:var(--hero-muted);}
+.countdown-chip strong{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--foam);margin:0 2px;}
+
+/* ━━━ CURRENT-TIME HIGHLIGHT ━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tl.tl-now .dot{background:var(--foam)!important;box-shadow:0 0 0 4px rgba(58,160,161,.25);}
+.tl.tl-now .tl-title{color:var(--foam);}
+.tl.tl-now::after{content:'▶ NOW';position:absolute;right:0;top:4px;font-size:.52rem;letter-spacing:.14em;color:var(--foam);background:rgba(58,160,161,.12);padding:2px 8px;border-radius:100px;}
+
+/* ━━━ WEATHER BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.weather-bar{background:var(--bg-section);border-bottom:1px solid var(--bdr);padding:24px 72px;display:flex;align-items:flex-start;justify-content:center;gap:40px;flex-wrap:wrap;}
+.weather-item{text-align:center;flex:1;min-width:110px;max-width:170px;}
+.weather-icon{font-size:1.7rem;margin-bottom:5px;}
+.weather-label{font-size:.54rem;letter-spacing:.18em;color:var(--teal);margin-bottom:3px;font-weight:400;}
+.weather-val{font-family:'Noto Serif JP',serif;font-size:.85rem;color:var(--ink);margin-bottom:3px;}
+.weather-note{font-size:.65rem;color:var(--ink-sub);line-height:1.55;}
+@media(max-width:768px){.weather-bar{padding:20px 32px;gap:20px;}}
+@media(max-width:480px){.weather-bar{padding:16px 20px;}}
+
+/* ━━━ NEW SECTION WRAPPER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.new-section{padding:80px 0;}
+.new-section-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+@media(max-width:768px){.new-section-inner{padding:0 32px;}}
+@media(max-width:480px){.new-section-inner{padding:0 20px;}}
+
+/* ━━━ MAP ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#trip-map{height:460px;border-radius:6px;border:1px solid var(--bdr);margin-top:32px;}
+.map-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.map-geo-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border:1px solid rgba(42,139,140,.38);border-radius:100px;background:none;color:var(--teal);font-size:.68rem;letter-spacing:.08em;cursor:pointer;transition:background .2s,color .2s;}
+.map-geo-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.map-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.64rem;color:var(--ink-sub);}
+.map-legend span{display:flex;align-items:center;gap:5px;}
+
+/* ━━━ RAINY DAY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.rainy-tabs{display:flex;gap:0;margin-top:40px;border-bottom:2px solid var(--bdr-soft);}
+.rainy-tab{padding:10px 22px;background:none;border:none;font-size:.64rem;letter-spacing:.12em;color:var(--ink-sub);cursor:pointer;position:relative;transition:color .2s;}
+.rainy-tab.active{color:var(--teal);}
+.rainy-tab.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--teal);}
+.rainy-panel{display:none;padding:28px 0;}
+.rainy-panel.active{display:block;}
+.rainy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.rainy-card{padding:20px;border:1px solid var(--bdr-soft);border-radius:4px;background:var(--bg-warm);}
+.rainy-card-title{font-family:'Noto Serif JP',serif;font-size:.88rem;margin-bottom:7px;color:var(--ink);}
+.rainy-card-desc{font-size:.73rem;line-height:1.85;color:var(--ink-sub);}
+@media(max-width:600px){.rainy-grid{grid-template-columns:1fr;}}
+
+/* ━━━ HOURS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hours-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px;}
+.hours-card{background:var(--bg-warm);border:1px solid var(--bdr-soft);border-radius:4px;padding:20px;}
+.hours-name{font-family:'Noto Serif JP',serif;font-size:.9rem;margin-bottom:12px;color:var(--ink);padding-bottom:8px;border-bottom:1px solid var(--bdr-soft);}
+.hours-row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--ink-sub);padding:5px 0;border-bottom:1px solid var(--bdr-soft);}
+.hours-row:last-child{border-bottom:none;}
+.hours-pill{font-size:.6rem;padding:2px 9px;border-radius:100px;}
+.pill-open{background:rgba(42,139,140,.12);color:var(--teal);}
+.pill-trip{background:rgba(42,139,140,.22);color:var(--teal);font-weight:700;}
+.pill-closed{background:rgba(180,60,60,.10);color:#b03030;}
+@media(max-width:600px){.hours-grid{grid-template-columns:1fr;}}
+
+/* ━━━ SHARE BUTTONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;border-radius:100px;font-size:.66rem;letter-spacing:.08em;text-decoration:none;cursor:pointer;border:none;transition:opacity .2s;}
+.share-btn:hover{opacity:.82;}
+.share-line{background:#06c755;color:#fff;}
+.share-x{background:#000;color:#fff;}
+.share-copy{background:var(--bg-section);color:var(--ink-sub);border:1px solid var(--bdr);}
+#copy-msg{font-size:.62rem;color:var(--teal);display:none;}
+
+/* ━━━ PRINT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media print{
+  #sticky-nav,.scroll-hint,.hero-day1-link,.countdown-chip,.nav-controls,
+  .share-row,.weather-bar,#lightbox{display:none!important;}
+  body{font-size:11pt;color:#000;}
+  .hero{height:32vh;min-height:unset;}
+  .day-card,.hl-card,.food-card{break-inside:avoid;box-shadow:none!important;border:1px solid #ccc!important;}
+  *{animation:none!important;transition:none!important;}
+}
 </style>
 </head>
 <body>
@@ -394,6 +518,12 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   <a href="#timeline" class="snav-item active">タイムライン</a>
   <a href="#food" class="snav-item">食事</a>
   <a href="#highlights" class="snav-item">見どころ</a>
+  <div class="nav-controls">
+    <button class="nav-ctrl-btn" id="dark-toggle" title="ダークモード">🌙</button>
+    <button class="nav-ctrl-btn fs-btn active" data-size="m">A</button>
+    <button class="nav-ctrl-btn fs-btn" data-size="s">A−</button>
+    <button class="nav-ctrl-btn fs-btn" data-size="l">A＋</button>
+  </div>
 </nav>
 
 <!-- ════════════ HERO ════════════ -->
@@ -402,13 +532,16 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   <div class="hero-img"></div>
   <div class="hero-grad"></div>
   <div class="hero-content">
-    <p class="eyebrow">Day 2 · Sunday, June 1 · 成田観光</p>
+    <p class="eyebrow">Day 2 · Sunday, May 31 · 成田観光</p>
     <h1>牧場の風と<br><em>千年の参道</em>と。</h1>
     <div class="hero-info">
       <span>成田ゆめ牧場 → 成田山新勝寺</span>
       <span>成田 17:00 発 → 柏 17:50 着</span>
     </div>
     <a href="index.html" class="hero-day1-link">← 1日目（銚子）のプランを見る</a>
+    <div class="countdown-chip" id="countdown-chip">
+      <strong id="countdown-days">—</strong><span>日後に出発</span>
+    </div>
   </div>
   <p class="photo-credit">📷 成田山新勝寺 大本堂 / Wikimedia Commons</p>
   <div class="scroll-hint">
@@ -467,6 +600,15 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
       <a class="t-link" href="https://transit.yahoo.co.jp/search/result?from=%E6%88%90%E7%94%B0&to=%E6%9F%8F" target="_blank" rel="noopener">Yahoo!乗換 成田→柏</a>
     </div>
   </div>
+</div>
+
+<!-- ════════════ WEATHER BAR ════════════ -->
+<div class="weather-bar">
+  <div class="weather-item"><div class="weather-icon">🌤</div><div class="weather-label">5月末の天気</div><div class="weather-val">晴れ時々曇り</div><div class="weather-note">降水確率 約25〜35%。急な夕立に注意</div></div>
+  <div class="weather-item"><div class="weather-icon">🌡</div><div class="weather-label">気温</div><div class="weather-val">最高 24〜27℃</div><div class="weather-note">最低 16〜18℃。牧場は朝晩冷え込む</div></div>
+  <div class="weather-item"><div class="weather-icon">👕</div><div class="weather-label">服装</div><div class="weather-val">薄手・重ね着</div><div class="weather-note">牧場は風が強い。Tシャツ＋薄手カーディガン推奨</div></div>
+  <div class="weather-item"><div class="weather-icon">🐄</div><div class="weather-label">牧場天気</div><div class="weather-val">屋外メイン</div><div class="weather-note">牧場は雨でも楽しめるが、雨天時は動物エリアが滑りやすい</div></div>
+  <div class="weather-item"><div class="weather-icon">☂</div><div class="weather-label">雨対策</div><div class="weather-val">折りたたみ傘</div><div class="weather-note">成田山参道は雨天でも屋根付きあり。傘必携</div></div>
 </div>
 
 <!-- ════════════ TIMELINE ════════════ -->
@@ -875,10 +1017,134 @@ footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
   </div>
 </div>
 
+<!-- ════════════ MAP ════════════ -->
+<div class="new-section" style="background:var(--bg-warm);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Spot Map</span>
+      <h2 class="sec-title">成田エリアマップ</h2>
+      <div class="deco-line"></div>
+      <p style="font-size:.74rem;color:var(--ink-sub);margin-top:14px;line-height:1.8;">全スポットの位置を地図で確認。「現在地を表示」で自分の場所からの距離もわかります。</p>
+    </div>
+    <div id="trip-map"></div>
+    <div class="map-controls">
+      <button class="map-geo-btn" id="map-geo-btn">📍 現在地を表示</button>
+      <div class="map-legend">
+        <span>🔵 観光スポット</span>
+        <span>🟢 グルメ</span>
+        <span>🚉 交通</span>
+        <span>🏨 宿泊</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ OPERATING HOURS ════════════ -->
+<div class="new-section" style="background:var(--bg);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Hours &amp; Access</span>
+      <h2 class="sec-title">営業時間・アクセス</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-card">
+        <div class="hours-name">🐄 成田ゆめ牧場</div>
+        <div class="hours-row"><span>開園時間</span><span>09:30〜16:00（土日祝は17:00）</span></div>
+        <div class="hours-row"><span>旅行当日 (5/31)</span><span><span class="hours-pill pill-trip">開園</span></span></div>
+        <div class="hours-row"><span>入場料</span><span>大人 ¥1,600（要確認）</span></div>
+        <div class="hours-row"><span>無料バス</span><span>JR成田駅 東口 → 約30分</span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">⛩ 成田山新勝寺</div>
+        <div class="hours-row"><span>参拝時間</span><span>06:00〜18:00（開山時間）</span></div>
+        <div class="hours-row"><span>旅行当日 (5/31)</span><span><span class="hours-pill pill-trip">参拝可</span></span></div>
+        <div class="hours-row"><span>入場料</span><span>境内無料</span></div>
+        <div class="hours-row"><span>駐車場</span><span>有料あり（参道徒歩圏）</span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">🍱 成田山参道 鰻店（川豊・駿河屋）</div>
+        <div class="hours-row"><span>営業時間</span><span>11:00〜15:00 頃（変動あり）</span></div>
+        <div class="hours-row"><span>旅行当日</span><span><span class="hours-pill pill-trip">営業予定</span></span></div>
+        <div class="hours-row"><span>注意</span><span>週末は行列必至。13時台が狙い目</span></div>
+        <div class="hours-row"><span>予約</span><span>一部店舗は予約可（要確認）</span></div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-name">🚃 帰路 成田→我孫子→柏（JR）</div>
+        <div class="hours-row"><span>出発目安</span><span>17:00 成田発</span></div>
+        <div class="hours-row"><span>到着目安</span><span>17:50 柏着（所要約50分）</span></div>
+        <div class="hours-row"><span>運賃</span><span>約 ¥940</span></div>
+        <div class="hours-row"><span>乗換</span><span><a href="https://transit.yahoo.co.jp/search/result?from=%E6%88%90%E7%94%B0&to=%E6%9F%8F" target="_blank" rel="noopener" style="color:var(--teal);">Yahoo!乗換で確認</a></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ RAINY DAY PLAN ════════════ -->
+<div class="new-section" style="background:var(--bg-section);">
+  <div class="new-section-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Rainy Day Plan</span>
+      <h2 class="sec-title">雨の日プラン</h2>
+      <div class="deco-line"></div>
+    </div>
+    <div class="rainy-tabs">
+      <button class="rainy-tab active" data-tab="light">小雨・曇り</button>
+      <button class="rainy-tab" data-tab="heavy">本降り・嵐</button>
+    </div>
+    <div class="rainy-panel active" id="rainy-light">
+      <div class="rainy-grid">
+        <div class="rainy-card">
+          <div class="rainy-card-title">🐄 ゆめ牧場は小雨 OK</div>
+          <div class="rainy-card-desc">小雨程度ならゆめ牧場の屋内施設（バター・チーズ体験など）は楽しめる。屋外エリアは滑りやすいので注意。雨天時は動物ふれあいエリアが空いていることも多い。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">⛩ 成田山は雨でも趣がある</div>
+          <div class="rainy-card-desc">成田山新勝寺は雨の中でも荘厳な雰囲気が漂う。参道の一部には屋根付きアーケードがあり、食べ歩きも楽しめる。大本堂・三重塔は雨に濡れて一層重厚に見える。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🍱 鰻屋でゆっくり雨宿り</div>
+          <div class="rainy-card-desc">雨の日は外回りを減らして、川豊・駿河屋などの名店でゆっくり鰻を味わう時間に充てる。普段は行列が長い名店も、雨天は比較的空いていることがある。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🏛 成田山霊光館・書院庭園</div>
+          <div class="rainy-card-desc">境内奥の霊光館（寺の歴史・文化財展示）は雨天の屋内観光に最適。隣接する書院庭園は雨の日の濡れた石畳や苔が美しく、写真映えする。</div>
+        </div>
+      </div>
+    </div>
+    <div class="rainy-panel" id="rainy-heavy">
+      <div class="rainy-grid">
+        <div class="rainy-card">
+          <div class="rainy-card-title">🚌 ゆめ牧場は屋内体験のみ</div>
+          <div class="rainy-card-desc">本降りなら牧場の屋内施設（バター作り・チーズ体験・牧場レストラン）に集中し、屋外エリアは見送る。入場時間を短縮して成田山に多めの時間を割くのがおすすめ。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🏠 ホテルのレイトチェックアウト</div>
+          <div class="rainy-card-desc">嵐級の悪天候なら、ホテルのレイトチェックアウト（追加料金の場合あり）を利用して天気が回復するまで待機。午後に晴れるなら成田山だけ集中して楽しむのも一手。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">🛍 成田市内のショッピング</div>
+          <div class="rainy-card-desc">成田駅周辺にはイオンモール成田などの屋内施設あり。雨の日はお土産の購入や千葉名産品探しに時間を充てる。なごみの米屋の本店でゆっくり羊羹を選ぶのも良い。</div>
+        </div>
+        <div class="rainy-card">
+          <div class="rainy-card-title">✈ 成田空港 展望デッキ</div>
+          <div class="rainy-card-desc">第1・第2ターミナルの展望デッキは雨でも楽しめる（有料・約300円）。国際線の離着陸を間近で見られる。雨の日は視界が悪い場合もあるが、空港内の免税ショップや飲食店も楽しめる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════ FOOTER ════════════ -->
 <footer>
-  <p>成田観光プラン 2026 · Day 2 of 2</p>
-  <p>銚子→成田 2泊2日の旅 — by Claude Code</p>
+  <p>NARITA DAY TRIP · MAY 31, 2026 · 成田ゆめ牧場 &amp; 成田山新勝寺</p>
+  <p>銚子→成田 2日間の旅 — by Claude Code</p>
+  <div class="share-row">
+    <a class="share-btn share-line" id="share-line" href="#" target="_blank" rel="noopener">LINE でシェア</a>
+    <a class="share-btn share-x" id="share-x" href="#" target="_blank" rel="noopener">𝕏 でシェア</a>
+    <button class="share-btn share-copy" id="share-copy">🔗 URLをコピー</button>
+    <span id="copy-msg" style="font-size:.62rem;color:var(--teal);display:none;">コピーしました！</span>
+  </div>
   <div class="footer-links">
     <a href="index.html" class="footer-link">← 1日目（銚子）へ戻る</a>
     <a href="https://www.naritasan.or.jp/" class="footer-link" target="_blank" rel="noopener">成田山新勝寺 公式</a>
@@ -982,6 +1248,128 @@ document.querySelectorAll('.thumb-row').forEach(row => {
     });
   });
 });
+
+// ── DARK MODE ──────────────────────────────────────────
+(function () {
+  const btn = document.getElementById('dark-toggle');
+  const saved = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+})();
+
+// ── FONT SIZE ──────────────────────────────────────────
+(function () {
+  const saved = localStorage.getItem('fs') || 'm';
+  applyFs(saved);
+  document.querySelectorAll('.fs-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.size === saved);
+    b.addEventListener('click', () => {
+      applyFs(b.dataset.size);
+      localStorage.setItem('fs', b.dataset.size);
+      document.querySelectorAll('.fs-btn').forEach(x => x.classList.toggle('active', x === b));
+    });
+  });
+  function applyFs(s) {
+    document.documentElement.className = document.documentElement.className.replace(/fs-[sl]/g, '').trim();
+    if (s === 's') document.documentElement.classList.add('fs-s');
+    if (s === 'l') document.documentElement.classList.add('fs-l');
+  }
+})();
+
+// ── COUNTDOWN (Day 2: May 31) ──────────────────────────
+(function () {
+  const chip = document.getElementById('countdown-chip');
+  const daysEl = document.getElementById('countdown-days');
+  const trip = new Date('2026-05-31T00:00:00');
+  const diff = Math.ceil((trip - new Date()) / 86400000);
+  if (diff > 0) { daysEl.textContent = diff; }
+  else if (diff === 0) { daysEl.textContent = '今日'; chip.querySelector('span').textContent = 'が旅行当日！'; }
+  else { chip.style.display = 'none'; }
+})();
+
+// ── CURRENT TIME HIGHLIGHT ─────────────────────────────
+(function () {
+  const now = new Date();
+  const hhmm = now.getHours() * 100 + now.getMinutes();
+  document.querySelectorAll('.tl').forEach(row => {
+    const tEl = row.querySelector('.tl-t');
+    if (!tEl) return;
+    const t = parseInt(tEl.textContent.trim().replace(':', ''), 10);
+    if (!isNaN(t) && Math.abs(hhmm - t) <= 30) row.classList.add('tl-now');
+  });
+})();
+
+// ── LEAFLET MAP (Narita) ───────────────────────────────
+(function () {
+  if (typeof L === 'undefined' || !document.getElementById('trip-map')) return;
+  const map = L.map('trip-map').setView([35.773, 140.318], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+  const spots = [
+    { name:'JR成田駅', lat:35.7261, lng:140.3187, type:'transit', note:'成田線・京成成田線。無料バス乗り場あり' },
+    { name:'成田ゆめ牧場', lat:35.7500, lng:140.3400, type:'sight', note:'入場¥1,600。JR成田駅東口から無料バス約30分' },
+    { name:'成田山新勝寺', lat:35.7953, lng:140.3180, type:'sight', note:'境内無料。年間1,000万人参拝の名刹' },
+    { name:'成田山参道', lat:35.7820, lng:140.3175, type:'food', note:'約800mの参道に鰻・漬物・和菓子が並ぶ' },
+    { name:'川豊（鰻）', lat:35.7840, lng:140.3172, type:'food', note:'老舗鰻店。鰻丼¥2,500〜' },
+    { name:'なごみの米屋', lat:35.7800, lng:140.3170, type:'food', note:'明治32年創業。羊羹・ぴーなっつ最中' },
+    { name:'マイステージプレミア成田', lat:35.7270, lng:140.3195, type:'hotel', note:'成田駅徒歩圏内。チェックアウト10:00' },
+    { name:'成田国際空港 T1', lat:35.7720, lng:140.3869, type:'transit', note:'展望デッキで離着陸見学も' },
+  ];
+  const colors = { sight:'#2a8b8c', food:'#4caf50', transit:'#1565c0', hotel:'#9c27b0' };
+  spots.forEach(s => {
+    const icon = L.divIcon({
+      html: `<div style="background:${colors[s.type]};width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>`,
+      className: '', iconSize: [12, 12], iconAnchor: [6, 6]
+    });
+    L.marker([s.lat, s.lng], { icon }).addTo(map)
+      .bindPopup(`<strong>${s.name}</strong><br><span style="font-size:12px;color:#555">${s.note}</span>`);
+  });
+  document.getElementById('map-geo-btn').addEventListener('click', () => {
+    if (!navigator.geolocation) { alert('位置情報が利用できません'); return; }
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      const youIcon = L.divIcon({
+        html: '<div style="background:#e53935;width:14px;height:14px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(229,57,53,.5)"></div>',
+        className: '', iconSize: [14, 14], iconAnchor: [7, 7]
+      });
+      L.marker([lat, lng], { icon: youIcon }).addTo(map).bindPopup('<strong>現在地</strong>').openPopup();
+      map.setView([lat, lng], 14);
+    }, () => alert('位置情報の取得に失敗しました。'));
+  });
+})();
+
+// ── RAINY DAY TABS ─────────────────────────────────────
+document.querySelectorAll('.rainy-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.rainy-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.rainy-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('rainy-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── SHARE BUTTONS ──────────────────────────────────────
+(function () {
+  const url = encodeURIComponent(location.href);
+  const text = encodeURIComponent('成田観光プラン 2026 — 2日目 ゆめ牧場 & 成田山');
+  document.getElementById('share-line').href = 'https://social-plugins.line.me/lineit/share?url=' + url;
+  document.getElementById('share-x').href = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + text;
+  document.getElementById('share-copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href).then(() => {
+      const msg = document.getElementById('copy-msg');
+      msg.style.display = 'inline';
+      setTimeout(() => { msg.style.display = 'none'; }, 2000);
+    });
+  });
+})();
 </script>
 </body>
 </html>

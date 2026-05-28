@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "choshi-travel",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": ["-e", "require 'webrick'; WEBrick::HTTPServer.new(:Port=>8765,:DocumentRoot=>'/Users/akihiromiki/Downloads/choshi-trip').start"],
+      "port": 8765
+    }
+  ]
+}
