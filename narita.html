@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成田観光プラン 2026 · 2日目 ゆめ牧場 &amp; 成田山</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN SYSTEM — index.html と共通
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root{
+  --bg:        #ffffff;
+  --bg-warm:   #faf8f5;
+  --bg-section:#f2efe9;
+  --ink:       #1d2d3e;
+  --ink-sub:   rgba(29,45,62,.60);
+  --ink-light: rgba(29,45,62,.40);
+  --teal:      #2a8b8c;
+  --foam:      #3aa0a1;
+  --sand:      #9e6c2a;
+  --bdr:       rgba(29,45,62,.11);
+  --bdr-soft:  rgba(29,45,62,.07);
+  --hero-dark: #0d1a10;
+  --hero-text: #f4f0e8;
+  --hero-muted:rgba(244,240,232,.52);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* ━━━ STICKY NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:7000;
+  display:flex;justify-content:center;align-items:stretch;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bdr);
+  transform:translateY(-100%);transition:transform .35s ease;
+}
+#sticky-nav.nav-visible{transform:translateY(0);}
+.snav-item{
+  padding:13px 22px;font-size:.62rem;letter-spacing:.16em;
+  color:var(--ink-sub);text-decoration:none;
+  border-right:1px solid var(--bdr-soft);
+  transition:color .2s,background .2s;white-space:nowrap;
+}
+.snav-item:last-child{border-right:none;}
+.snav-item:hover{color:var(--teal);background:rgba(42,139,140,.05);}
+.snav-item.active{color:var(--teal);font-weight:400;}
+
+/* ━━━ HERO (ダーク維持) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  position:relative;height:100vh;min-height:640px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 72px 72px;overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:url('https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg') center 35%/cover no-repeat;
+  transform:scale(1.06);animation:slowZoom 18s ease-out forwards;
+}
+@keyframes slowZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(13,26,16,.06) 0%,
+    rgba(13,26,16,.25) 44%,
+    rgba(13,26,16,.82) 72%,
+    var(--hero-dark) 100%);
+}
+.hero-content{position:relative;z-index:2;max-width:700px;}
+.eyebrow{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.05rem;color:var(--foam);letter-spacing:.14em;margin-bottom:14px;
+  opacity:0;animation:fadeUp .8s .2s forwards;
+}
+.hero h1{
+  font-family:'Noto Serif JP',serif;font-weight:300;
+  font-size:clamp(2.8rem,5vw,4.8rem);line-height:1.22;margin-bottom:20px;
+  color:var(--hero-text);opacity:0;animation:fadeUp .8s .45s forwards;
+}
+.hero h1 em{color:var(--foam);font-style:normal;}
+.hero-info{display:flex;gap:28px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .7s forwards;}
+.hero-info span{
+  font-size:.78rem;letter-spacing:.08em;color:var(--hero-muted);
+  display:flex;align-items:center;gap:8px;
+}
+.hero-info span::before{content:'';display:block;width:16px;height:1px;background:var(--foam);}
+.scroll-hint{
+  position:absolute;bottom:36px;right:60px;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeIn 1s 1.4s forwards;
+}
+.scroll-hint p{font-size:.6rem;letter-spacing:.2em;color:var(--hero-muted);writing-mode:vertical-rl;}
+.scroll-line{width:1px;height:56px;background:linear-gradient(to bottom,var(--foam),transparent);animation:sb 2.2s 1.8s infinite;}
+@keyframes sb{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.photo-credit{position:absolute;bottom:8px;right:8px;font-size:.58rem;color:rgba(255,255,255,.28);z-index:3;}
+
+/* ━━━ HOTEL BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hotel-bar{
+  background:var(--ink);
+  padding:22px 72px;
+  display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;
+}
+.hotel-label{
+  font-size:.58rem;letter-spacing:.22em;color:rgba(244,240,232,.45);font-weight:400;
+}
+.hotel-name{
+  font-family:'Noto Serif JP',serif;font-size:1rem;font-weight:300;
+  color:var(--hero-text);margin-top:3px;letter-spacing:.06em;
+}
+.hotel-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:.84rem;color:var(--foam);margin-top:2px;
+}
+.hotel-divider{width:1px;height:44px;background:rgba(244,240,232,.14);}
+.hotel-info{display:flex;gap:36px;align-items:center;}
+.hotel-stat{text-align:center;}
+.hotel-stat-val{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--hero-text);letter-spacing:.04em;}
+.hotel-stat-lbl{font-size:.54rem;letter-spacing:.16em;color:rgba(244,240,232,.40);margin-top:2px;}
+
+/* ━━━ TRAIN BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.train-bar{
+  background:var(--bg-section);
+  border-top:3px solid var(--teal);
+  border-bottom:1px solid var(--bdr);
+  padding:28px 72px;display:flex;justify-content:center;
+}
+.t-item{flex:1;max-width:300px;padding:12px 32px;text-align:center;position:relative;}
+.t-item+.t-item::before{content:'';position:absolute;left:0;top:10%;height:80%;width:1px;background:var(--bdr);}
+.t-label{font-size:.6rem;letter-spacing:.2em;color:var(--teal);margin-bottom:5px;font-weight:400;}
+.t-route{font-family:'Noto Serif JP',serif;font-size:1rem;margin-bottom:4px;color:var(--ink);}
+.t-time{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--sand);}
+.t-links{display:flex;gap:7px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.t-link{
+  font-size:.58rem;color:var(--teal);letter-spacing:.07em;
+  border:1px solid rgba(42,139,140,.38);padding:4px 11px;border-radius:100px;
+  text-decoration:none;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;
+}
+.t-link:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+/* ━━━ SECTION COMMON ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section{padding:96px 72px;max-width:1280px;margin:0 auto;}
+.sec-head{text-align:center;margin-bottom:72px;}
+.sec-tag{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1rem;color:var(--foam);letter-spacing:.18em;display:block;margin-bottom:10px;
+}
+.sec-title{font-family:'Noto Serif JP',serif;font-weight:300;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--ink);}
+.deco-line{width:52px;height:1px;background:linear-gradient(to right,var(--teal),transparent);margin:14px auto 0;}
+
+/* ━━━ TIMELINE SECTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.day-card{
+  background:var(--bg-warm);
+  border:1px solid var(--bdr);border-radius:6px;
+  box-shadow:0 4px 32px rgba(29,45,62,.07);
+  overflow:hidden;
+  opacity:0;transform:translateY(40px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.day-card.visible{opacity:1;transform:translateY(0);}
+.day-card-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.day-photo{
+  position:relative;overflow:hidden;min-height:520px;cursor:zoom-in;
+}
+.day-photo img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .9s ease;display:block;
+}
+.day-card:hover .day-photo img{transform:scale(1.05);}
+.day-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(13,26,16,.28),rgba(13,26,16,.04));
+  pointer-events:none;
+}
+.day-photo-badge{
+  position:absolute;bottom:28px;left:28px;
+  background:rgba(42,139,140,.88);backdrop-filter:blur(6px);
+  color:#fff;font-size:.62rem;letter-spacing:.14em;
+  padding:6px 16px;border-radius:100px;pointer-events:none;
+}
+.day-body{padding:48px 44px;display:flex;flex-direction:column;gap:32px;}
+
+/* タイムライン */
+.timeline{display:flex;flex-direction:column;}
+.tl{display:grid;grid-template-columns:60px 1fr;gap:12px;padding-bottom:20px;position:relative;}
+.tl:last-child{padding-bottom:0;}
+.tl::before{content:'';position:absolute;left:28px;top:24px;bottom:0;width:1px;background:rgba(42,139,140,.20);}
+.tl:last-child::before{display:none;}
+.tl-t{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:400;color:var(--foam);text-align:right;padding-top:3px;letter-spacing:.04em;}
+.tl.hl .tl-t{color:var(--sand);}
+.dot{position:absolute;left:23px;top:6px;width:13px;height:13px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-warm);}
+.tl.hl .dot{background:var(--teal);box-shadow:0 0 10px rgba(42,139,140,.4);}
+.tl-title{font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:400;margin-bottom:3px;line-height:1.45;color:var(--ink);}
+.tl.hl .tl-title{font-size:.92rem;font-weight:700;}
+.tl-note{font-size:.73rem;color:var(--ink-sub);line-height:1.65;}
+.map-link{font-size:.75rem;text-decoration:none;margin-left:5px;opacity:.45;display:inline-block;vertical-align:middle;transition:opacity .2s,transform .2s;}
+.map-link:hover{opacity:1;transform:scale(1.25);}
+
+/* サムネイル */
+.thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.thumb{position:relative;border-radius:3px;overflow:hidden;aspect-ratio:4/3;cursor:zoom-in;}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block;}
+.thumb:hover img{transform:scale(1.1);}
+.thumb-cap{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,22,34,.78),transparent 55%);display:flex;align-items:flex-end;padding:8px 10px;font-size:.68rem;color:rgba(255,255,255,.9);letter-spacing:.04em;pointer-events:none;}
+
+/* 費用ボックス */
+.cost-box{
+  border:1px solid var(--bdr-soft);border-radius:4px;padding:22px 24px;
+  background:var(--bg);
+}
+.cost-box-title{font-size:.58rem;letter-spacing:.22em;color:var(--teal);margin-bottom:14px;font-weight:400;}
+.cost-table{width:100%;border-collapse:collapse;}
+.cost-table td{
+  padding:8px 0;border-bottom:1px solid var(--bdr-soft);
+  font-size:.76rem;color:var(--ink-sub);line-height:1.4;
+}
+.cost-table td:last-child{text-align:right;color:var(--sand);white-space:nowrap;padding-left:12px;}
+.cost-total td{color:var(--ink)!important;font-family:'Noto Serif JP',serif;font-weight:700;border-bottom:none;padding-top:12px;}
+
+/* アドバイス */
+.advice-list{list-style:none;}
+.advice-list li{
+  font-size:.78rem;line-height:1.95;color:var(--ink-sub);
+  margin-bottom:6px;padding-left:18px;position:relative;
+}
+.advice-list li::before{content:'—';position:absolute;left:0;color:var(--teal);}
+
+/* ━━━ FOOD GUIDE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.food-section{padding:96px 0;background:var(--bg-warm);}
+.food-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+.food-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.food-card{
+  background:var(--bg);border:1px solid var(--bdr);border-radius:4px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 2px 16px rgba(29,45,62,.05);
+  transition:box-shadow .3s,transform .3s;
+}
+.food-card:hover{box-shadow:0 8px 32px rgba(29,45,62,.11);transform:translateY(-4px);}
+.food-img{position:relative;height:158px;overflow:hidden;flex-shrink:0;}
+.food-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block;}
+.food-card:hover .food-img img{transform:scale(1.06);}
+.food-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 28%,rgba(11,22,34,.70));
+  display:flex;align-items:flex-end;padding:11px 14px;pointer-events:none;
+}
+.food-icon{font-size:1.7rem;line-height:1;}
+.food-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:7px;flex:1;}
+.food-category{font-size:.55rem;letter-spacing:.22em;color:var(--teal);font-weight:400;}
+.food-name{font-family:'Noto Serif JP',serif;font-size:1rem;font-weight:400;line-height:1.4;color:var(--ink);}
+.food-desc{font-size:.76rem;line-height:1.9;color:var(--ink-sub);flex:1;}
+.food-shop{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding-top:10px;border-top:1px solid var(--bdr-soft);margin-top:2px;
+}
+.food-shop-label{
+  font-size:.54rem;letter-spacing:.16em;color:var(--teal);
+  background:rgba(42,139,140,.09);padding:3px 10px;
+  border-radius:100px;flex-shrink:0;font-weight:400;
+}
+.food-shop-link{
+  font-size:.72rem;color:var(--teal);text-decoration:none;
+  border-bottom:1px solid rgba(42,139,140,.26);padding-bottom:1px;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.food-shop-link:hover{color:var(--ink);border-color:var(--ink);}
+.food-price{
+  font-family:'Cormorant Garamond',serif;font-size:.86rem;color:var(--sand);letter-spacing:.04em;
+}
+
+/* ━━━ HIGHLIGHTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hl-section{background:var(--bg-section);padding:96px 0;}
+.hl-inner{max-width:1280px;margin:0 auto;padding:0 72px;}
+.hl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.hl-card{
+  background:var(--bg);border:1px solid var(--bdr);border-radius:4px;overflow:hidden;
+  box-shadow:0 2px 16px rgba(29,45,62,.05);
+  transition:box-shadow .3s,transform .3s;
+}
+.hl-card:hover{box-shadow:0 6px 28px rgba(29,45,62,.11);transform:translateY(-3px);}
+.hl-img{position:relative;height:180px;overflow:hidden;cursor:zoom-in;}
+.hl-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block;}
+.hl-card:hover .hl-img img{transform:scale(1.08);}
+.hl-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(11,22,34,.88));pointer-events:none;}
+.hl-body{padding:18px 20px 22px;background:var(--bg);}
+.hl-icon{font-size:1.3rem;display:block;margin-bottom:7px;}
+.hl-title{font-family:'Noto Serif JP',serif;font-size:.92rem;font-weight:400;margin-bottom:7px;color:var(--ink);}
+.hl-desc{font-size:.74rem;line-height:1.8;color:var(--ink-sub);}
+
+/* ━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+footer{padding:44px 72px;text-align:center;background:var(--bg-section);border-top:1px solid var(--bdr);}
+footer p{font-size:.72rem;color:var(--ink-sub);letter-spacing:.08em;margin-bottom:4px;}
+footer .credit-note{font-size:.65rem;color:var(--ink-light);margin-top:10px;}
+.footer-links{display:flex;gap:16px;justify-content:center;margin-top:18px;flex-wrap:wrap;}
+.footer-link{
+  font-size:.65rem;color:var(--teal);text-decoration:none;
+  border-bottom:1px solid rgba(42,139,140,.26);padding-bottom:2px;
+  transition:color .2s,border-color .2s;letter-spacing:.07em;
+}
+.footer-link:hover{color:var(--ink);border-color:var(--ink);}
+
+/* ━━━ LIGHTBOX ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#lightbox{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(11,22,34,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s ease;
+}
+#lightbox.lb-open{opacity:1;pointer-events:all;}
+#lb-figure{
+  position:relative;max-width:90vw;max-height:90vh;
+  transform:scale(.92);transition:transform .3s ease;
+  display:flex;flex-direction:column;align-items:center;
+}
+#lightbox.lb-open #lb-figure{transform:scale(1);}
+#lb-img{display:block;max-width:88vw;max-height:78vh;object-fit:contain;border-radius:2px;}
+#lb-cap{color:rgba(244,240,232,.55);font-size:.72rem;letter-spacing:.06em;margin-top:14px;text-align:center;}
+#lb-close{
+  position:fixed;top:22px;right:26px;background:none;border:none;
+  color:#f4f0e8;font-size:1.5rem;cursor:pointer;opacity:.5;
+  transition:opacity .2s;z-index:9001;line-height:1;padding:4px;
+}
+#lb-close:hover{opacity:1;}
+#lb-prev,#lb-next{
+  position:fixed;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:#f4f0e8;
+  font-size:2.2rem;cursor:pointer;opacity:.35;z-index:9001;
+  transition:opacity .2s;padding:20px 14px;
+}
+#lb-prev{left:8px;}
+#lb-next{right:8px;}
+#lb-prev:hover,#lb-next:hover{opacity:1;}
+.lb-hidden{display:none!important;}
+
+/* ━━━ RESPONSIVE 768px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:768px){
+  .hero{padding:0 32px 56px;}
+  .scroll-hint{right:24px;}
+  .hotel-bar{padding:20px 32px;gap:20px;}
+  .hotel-divider{display:none;}
+  .hotel-info{gap:20px;}
+  .train-bar{padding:24px 32px;flex-direction:column;align-items:center;gap:0;}
+  .t-item{max-width:100%;width:100%;padding:16px 8px;}
+  .t-item+.t-item::before{left:0;top:0;height:1px;width:100%;}
+  .section{padding:72px 32px;}
+  .hl-inner,.food-inner{padding:0 32px;}
+  .hl-section,.food-section{padding:72px 0;}
+  .day-card-inner{grid-template-columns:1fr;}
+  .day-photo{min-height:280px;}
+  .day-body{padding:32px 28px;}
+  .hl-grid{grid-template-columns:repeat(2,1fr);}
+  .food-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:36px 32px;}
+  .snav-item{padding:12px 14px;font-size:.58rem;letter-spacing:.1em;}
+}
+
+/* ━━━ RESPONSIVE 480px ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@media(max-width:480px){
+  .hero{padding:0 20px 44px;}
+  .section{padding:56px 20px;}
+  .hl-inner,.food-inner{padding:0 20px;}
+  .day-body{padding:28px 20px;}
+  .hl-grid,.food-grid{grid-template-columns:1fr;}
+  footer{padding:28px 20px;}
+  .footer-links{gap:10px;}
+  .hero-info{gap:14px;}
+  .sec-head{margin-bottom:48px;}
+  .thumb-row{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ STICKY NAV ════════════ -->
+<nav id="sticky-nav" aria-label="ページナビゲーション">
+  <a href="index.html" class="snav-item">← 1日目（銚子）</a>
+  <a href="#timeline" class="snav-item active">タイムライン</a>
+  <a href="#food" class="snav-item">食事</a>
+  <a href="#highlights" class="snav-item">見どころ</a>
+</nav>
+
+<!-- ════════════ HERO ════════════ -->
+<!-- 写真: 成田山新勝寺 / Wikimedia Commons -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Day 2 · Sunday, June 1 · 成田観光</p>
+    <h1>牧場の風と<br><em>千年の参道</em>と。</h1>
+    <div class="hero-info">
+      <span>成田ゆめ牧場 → 成田山新勝寺</span>
+      <span>成田 17:00 発 → 柏 17:50 着</span>
+    </div>
+  </div>
+  <p class="photo-credit">📷 成田山新勝寺 / Wikimedia Commons</p>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <p>SCROLL</p>
+  </div>
+</section>
+
+<!-- ════════════ HOTEL BAR ════════════ -->
+<div class="hotel-bar">
+  <div>
+    <div class="hotel-label">STAY · 1泊目</div>
+    <div class="hotel-name">マイステージプレミア成田</div>
+    <div class="hotel-sub">"Wake up in Narita, explore from here."</div>
+  </div>
+  <div class="hotel-divider"></div>
+  <div class="hotel-info">
+    <div class="hotel-stat">
+      <div class="hotel-stat-val">成田駅 徒歩圏内</div>
+      <div class="hotel-stat-lbl">ACCESS</div>
+    </div>
+    <div class="hotel-stat">
+      <div class="hotel-stat-val">チェックアウト 10:00</div>
+      <div class="hotel-stat-lbl">CHECK-OUT</div>
+    </div>
+    <div class="hotel-stat">
+      <div class="hotel-stat-val">荷物預かり可</div>
+      <div class="hotel-stat-lbl">LUGGAGE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ACCESS BAR ════════════ -->
+<div class="train-bar">
+  <div class="t-item">
+    <div class="t-label">🐄 成田駅 → ゆめ牧場</div>
+    <div class="t-route">東口から無料送迎バス</div>
+    <div class="t-time">所要約 30 分 ／ 無料・予約不要</div>
+    <div class="t-links">
+      <a class="t-link" href="https://www.yumebokujo.com/access.html" target="_blank" rel="noopener">公式アクセス案内</a>
+    </div>
+  </div>
+  <div class="t-item">
+    <div class="t-label">⛩ ゆめ牧場 → 成田山</div>
+    <div class="t-route">無料バスで成田駅 → 徒歩 10 分</div>
+    <div class="t-time">参道を歩いて新勝寺へ</div>
+    <div class="t-links">
+      <a class="t-link" href="https://www.naritasan.or.jp/" target="_blank" rel="noopener">成田山 公式</a>
+    </div>
+  </div>
+  <div class="t-item">
+    <div class="t-label">🚃 帰路（成田 → 柏）</div>
+    <div class="t-route">JR成田線 → 我孫子 → 常磐線 → 柏</div>
+    <div class="t-time">所要約 50 分 ／ 約 ¥940</div>
+    <div class="t-links">
+      <a class="t-link" href="https://transit.yahoo.co.jp/search/result?from=%E6%88%90%E7%94%B0&to=%E6%9F%8F" target="_blank" rel="noopener">Yahoo!乗換 成田→柏</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ TIMELINE ════════════ -->
+<div id="timeline" class="section">
+  <div class="sec-head">
+    <span class="sec-tag">Day 2 Full Schedule</span>
+    <h2 class="sec-title">2日目の一日</h2>
+    <div class="deco-line"></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-inner">
+      <!-- 写真 -->
+      <div class="day-photo">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+             alt="成田山新勝寺" loading="lazy">
+        <div class="day-photo-overlay"></div>
+        <div class="day-photo-badge">成田観光 2026.6.1</div>
+      </div>
+
+      <!-- タイムライン -->
+      <div class="day-body">
+        <div>
+          <p style="font-size:.6rem;letter-spacing:.2em;color:var(--teal);margin-bottom:7px;font-weight:400;">FULL-DAY ITINERARY</p>
+          <h3 style="font-family:'Noto Serif JP',serif;font-weight:700;font-size:1.3rem;line-height:1.5;margin-bottom:18px;color:var(--ink);">牧場の朝から、千年の参道へ</h3>
+
+          <div class="timeline">
+            <div class="tl">
+              <div class="tl-t">09:30</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🏨 マイステージプレミア成田 チェックアウト <a class="map-link" href="https://maps.google.com/?q=%E3%83%9E%E3%82%A4%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E6%88%90%E7%94%B0" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">不要な荷物はホテルに預けておくと身軽に動ける</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">10:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🚌 JR成田駅 東口 → 無料送迎バス乗車 <a class="map-link" href="https://maps.google.com/?q=35.7261,140.3187" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">成田ゆめ牧場の無料バス。予約不要・東口バス乗り場で乗車。約30分で到着</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">10:30</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🐄 成田ゆめ牧場 入場 <a class="map-link" href="https://maps.google.com/?q=35.7500,140.3400" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">大人 ¥1,600 / 小学生 ¥900（要確認）。動物ふれあい広場・搾乳体験など</div>
+              </div>
+            </div>
+            <div class="tl">
+              <div class="tl-t">11:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🧈 バター作り体験（有料オプション）</div>
+                <div class="tl-note">約30〜40分。自分で作ったバターはその場でパンにつけて試食。¥500程度</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">12:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🍦 牧場ランチ・ソフトクリーム</div>
+                <div class="tl-note">牧場レストランでBBQまたはカフェメニュー。濃厚ミルクのソフトクリームは必食</div>
+              </div>
+            </div>
+            <div class="tl">
+              <div class="tl-t">13:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🚌 無料送迎バスで成田駅へ出発</div>
+                <div class="tl-note">時刻表を事前に確認。13時台のバスを逃すと次が遅い可能性あり</div>
+              </div>
+            </div>
+            <div class="tl">
+              <div class="tl-t">13:30</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">成田駅着 → 表参道を歩いて成田山へ</div>
+                <div class="tl-note">成田駅から成田山まで参道を徒歩約10〜15分。食べ歩きしながらゆっくり</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">14:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🍱 成田山参道 で食べ歩き・昼食 <a class="map-link" href="https://maps.google.com/?q=35.7952,140.3180" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">川豊・駿河屋などの鰻の名店。漬物・揚げ饅頭・なごみの米屋の羊羹も必見</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">15:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">⛩ 成田山新勝寺 参拝 <a class="map-link" href="https://maps.google.com/?q=35.7953,140.3180" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">境内無料。総門・仁王門・大本堂・三重塔。国指定重要文化財が点在する広大な境内</div>
+              </div>
+            </div>
+            <div class="tl">
+              <div class="tl-t">16:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🛍 お土産・参道散策</div>
+                <div class="tl-note">なごみの米屋（羊羹・ぴーなっつ最中）、漬物、醤油煎餅などを選ぶ</div>
+              </div>
+            </div>
+            <div class="tl hl">
+              <div class="tl-t">17:00</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🚃 JR成田駅 出発 → 柏へ <a class="map-link" href="https://maps.google.com/?q=35.7261,140.3187" target="_blank" rel="noopener">📍</a></div>
+                <div class="tl-note">JR成田線 → 我孫子駅でJR常磐線に乗換 → 柏駅。所要約50分、¥940程度</div>
+              </div>
+            </div>
+            <div class="tl">
+              <div class="tl-t">17:50</div>
+              <div class="dot"></div>
+              <div>
+                <div class="tl-title">🏠 柏駅着・帰宅</div>
+                <div class="tl-note">2日間お疲れ様でした。時刻はYahoo!乗換で要確認</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- サムネイル -->
+        <div class="thumb-row">
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg" alt="成田山新勝寺" loading="lazy">
+            <div class="thumb-cap">成田山新勝寺</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita-san_three-storied_pagoda.jpg" alt="三重塔" loading="lazy">
+            <div class="thumb-cap">三重塔</div>
+          </div>
+          <div class="thumb">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg" alt="成田山参道" loading="lazy">
+            <div class="thumb-cap">成田山参道</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 費用まとめ -->
+    <div style="padding:32px 44px;border-top:1px solid var(--bdr-soft);background:var(--bg);">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:860px;margin:0 auto;">
+        <div class="cost-box">
+          <div class="cost-box-title">ESTIMATED COST · 概算費用（1人）</div>
+          <table class="cost-table">
+            <tr><td>成田→我孫子→柏（JR）</td><td>¥ 940</td></tr>
+            <tr><td>成田ゆめ牧場 入場料</td><td>¥ 1,600</td></tr>
+            <tr><td>バター体験（任意）</td><td>¥ 500</td></tr>
+            <tr><td>牧場ランチ・ソフトクリーム</td><td>¥ 1,200</td></tr>
+            <tr><td>成田山参道 昼食（鰻丼など）</td><td>¥ 2,500</td></tr>
+            <tr><td>お土産・食べ歩き</td><td>¥ 1,500</td></tr>
+            <tr class="cost-total"><td>合計（目安）</td><td>¥ 8,240</td></tr>
+          </table>
+          <p style="font-size:.62rem;color:var(--ink-light);margin-top:10px;">※ 鰻の名店でコースを頼むと +¥3,000程度。料金は要確認。</p>
+        </div>
+        <div>
+          <div class="cost-box-title" style="font-size:.58rem;letter-spacing:.22em;color:var(--teal);margin-bottom:14px;font-weight:400;">TIPS &amp; ADVICE</div>
+          <ul class="advice-list">
+            <li>ゆめ牧場の無料バス時刻表は<a href="https://www.yumebokujo.com/access.html" target="_blank" rel="noopener" style="color:var(--teal);">公式サイト</a>で必ず事前確認。GW・週末は混雑しやすい。</li>
+            <li>鰻の名店（川豊・駿河屋）は週末昼の行列が長い。13時台の遅め入店か、テイクアウト蒲焼きが狙い目。</li>
+            <li>成田山は境内が広く、公園・書院・成田山霊光館まで足を延ばすと1〜1.5時間かかる。</li>
+            <li>帰りの我孫子乗換で柏行き常磐線は日中15〜20分間隔。乗り遅れに注意。</li>
+            <li>ホテルの預かり荷物はチェックアウト当日18時頃まで受け取り可能なことが多い（要確認）。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FOOD GUIDE ════════════ -->
+<div id="food" class="food-section">
+  <div class="food-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Narita Flavors</span>
+      <h2 class="sec-title">成田の食を味わう</h2>
+      <div class="deco-line"></div>
+    </div>
+
+    <div class="food-grid">
+
+      <!-- 鰻 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+               alt="成田山参道" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🍱</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">成田名物 · 参道グルメ</div>
+          <div class="food-name">成田山参道の鰻</div>
+          <div class="food-desc">成田山参道は全国屈指の鰻の名所。江戸時代から成田詣の旅人をもてなしてきた伝統の味。炭火で香ばしく焼いたふっくら蒲焼きをぜひ。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">有名店</span>
+            <a href="https://www.kawatou.com/" class="food-shop-link" target="_blank" rel="noopener">川豊</a>
+            <span style="font-size:.65rem;color:var(--bdr);">|</span>
+            <a href="http://www.surugaya-narita.com/" class="food-shop-link" target="_blank" rel="noopener">駿河屋</a>
+          </div>
+          <div class="food-price">鰻丼 ¥2,500〜 ／ うな重 ¥3,500〜</div>
+        </div>
+      </div>
+
+      <!-- 漬物 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg"
+               alt="成田表参道" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🥒</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">千葉名物 · お土産</div>
+          <div class="food-name">成田の漬物・醤油</div>
+          <div class="food-desc">成田山参道沿いには漬物店が並ぶ。大根・白菜・なすなど千葉野菜の漬物と、地元醤油を使った漬物は食べ歩きにも最適。お土産に最適。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">お土産に</span>
+            <a href="https://www.nrtk.jp/" class="food-shop-link" target="_blank" rel="noopener">成田市観光協会</a>
+          </div>
+          <div class="food-price">漬物 ¥500〜 ／ 食べ歩き ¥200〜</div>
+        </div>
+      </div>
+
+      <!-- 牧場グルメ -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg"
+               alt="牧場" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🍦</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">成田ゆめ牧場 · 牧場グルメ</div>
+          <div class="food-name">濃厚ミルクのソフトクリーム</div>
+          <div class="food-desc">成田ゆめ牧場の新鮮な牛乳を使ったソフトクリームは濃厚でなめらか。バター作り体験で作った自家製バターをパンに塗るセットも人気。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">現地で</span>
+            <a href="https://www.yumebokujo.com/" class="food-shop-link" target="_blank" rel="noopener">成田ゆめ牧場 公式</a>
+          </div>
+          <div class="food-price">ソフトクリーム ¥400 ／ BBQランチ ¥1,200〜</div>
+        </div>
+      </div>
+
+      <!-- 羊羹 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+               alt="成田山" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🍡</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">成田銘菓 · お土産</div>
+          <div class="food-name">なごみの米屋の羊羹</div>
+          <div class="food-desc">明治32年創業の老舗「なごみの米屋」の羊羹は成田土産の定番。ぴーなっつ最中や栗羊羹など種類豊富。参道の本店でゆっくり選べる。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">公式</span>
+            <a href="https://www.nagomi-yoneya.co.jp/" class="food-shop-link" target="_blank" rel="noopener">なごみの米屋</a>
+          </div>
+          <div class="food-price">羊羹（小） ¥540〜 ／ 最中 ¥200〜</div>
+        </div>
+      </div>
+
+      <!-- 落花生 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_02.jpg"
+               alt="千葉" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🥜</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">千葉の特産品</div>
+          <div class="food-name">千葉の落花生（ピーナッツ）</div>
+          <div class="food-desc">全国シェア80%超の千葉産落花生。成田山参道にも落花生専門店や千葉名産品店が点在。煎り落花生・ピーナッツバター・ピーナッツ煎餅など種類多彩。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">現地で</span>
+            <a href="https://www.nrtk.jp/" class="food-shop-link" target="_blank" rel="noopener">成田市観光協会</a>
+          </div>
+          <div class="food-price">煎り落花生 ¥500〜 ／ お土産セット ¥1,000〜</div>
+        </div>
+      </div>
+
+      <!-- 揚げ饅頭 -->
+      <div class="food-card">
+        <div class="food-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita_Omotesando.jpg"
+               alt="参道の食べ歩き" loading="lazy">
+          <div class="food-img-overlay">
+            <span class="food-icon">🍢</span>
+          </div>
+        </div>
+        <div class="food-body">
+          <div class="food-category">参道食べ歩き</div>
+          <div class="food-name">揚げ饅頭・草餅</div>
+          <div class="food-desc">成田山参道の食べ歩きグルメの定番。揚げたてのアツアツ揚げ饅頭や、よもぎ香る草餅は参道散策のお供に。地元の和菓子屋でのんびり選んで。</div>
+          <div class="food-shop">
+            <span class="food-shop-label">食べ歩き</span>
+            <a href="https://www.nrtk.jp/gourmet/" class="food-shop-link" target="_blank" rel="noopener">成田グルメ情報</a>
+          </div>
+          <div class="food-price">揚げ饅頭 ¥150〜 ／ 草餅 ¥200〜</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ HIGHLIGHTS ════════════ -->
+<div id="highlights" class="hl-section">
+  <div class="hl-inner">
+    <div class="sec-head">
+      <span class="sec-tag">Narita Highlights</span>
+      <h2 class="sec-title">成田の見どころ</h2>
+      <div class="deco-line"></div>
+    </div>
+
+    <div class="hl-grid">
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+               alt="成田山新勝寺 大本堂" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">⛩</span>
+          <div class="hl-title">成田山新勝寺 — 大本堂</div>
+          <div class="hl-desc">真言宗智山派の大本山。年間約1,000万人が参拝する関東有数の名刹。不動明王を本尊とし、勝運・厄除けで信仰を集める。大本堂・三重塔・仁王門は国指定重要文化財。境内は無料で自由に参拝できる。</div>
+        </div>
+      </div>
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narita-san_three-storied_pagoda.jpg"
+               alt="成田山三重塔" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🗼</span>
+          <div class="hl-title">三重塔・公園の庭園</div>
+          <div class="hl-desc">江戸中期に建立された優美な三重塔は国指定重要文化財。境内奥の成田山公園は広大な日本庭園で、季節の花と池が美しい。知る人ぞ知る静かな散策スポット。</div>
+        </div>
+      </div>
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+               alt="成田山参道" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🛍</span>
+          <div class="hl-title">成田山表参道 — 800m の食と工芸</div>
+          <div class="hl-desc">JR成田駅から成田山まで続く約800mの参道。鰻屋・漬物店・和菓子屋・民芸品店が軒を連ねる。江戸時代の面影を残す古い町並みと現代の食が共存する。ぶらぶら歩くだけで成田の文化を体感できる。</div>
+        </div>
+      </div>
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Fishing_Port_01.jpg"
+               alt="成田ゆめ牧場" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🐄</span>
+          <div class="hl-title">成田ゆめ牧場 — 牧場体験</div>
+          <div class="hl-desc">成田市内に広がる観光牧場。牛・馬・羊・うさぎなどとふれあえる動物広場、バター・チーズ作り体験、乗馬体験など盛りだくさん。JR成田駅から無料送迎バスで約30分。手ぶらで気軽に訪れられる。</div>
+        </div>
+      </div>
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Naritasan_Shinshoji_Temple_2009.jpg"
+               alt="成田山霊光館" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">🏛</span>
+          <div class="hl-title">成田山霊光館・書院</div>
+          <div class="hl-desc">成田山開基1080年を記念して建てられた霊光館では、寺の歴史や文化財を展示。国指定名勝の書院庭園は、松・池・石灯籠が織りなす格調ある空間。時間があれば足を延ばす価値がある。</div>
+        </div>
+      </div>
+
+      <div class="hl-card">
+        <div class="hl-img">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Choshi_Electric_Railway_Line.JPG"
+               alt="成田空港" loading="lazy">
+        </div>
+        <div class="hl-body">
+          <span class="hl-icon">✈</span>
+          <div class="hl-title">成田空港 — 旅の玄関口</div>
+          <div class="hl-desc">成田市は日本最大の国際空港・成田空港のお膝元。第1〜第3ターミナルの展望デッキから離着陸を眺めるのも楽しい。もし時間があれば国際線ロビーのショッピングゾーンも見どころ（セキュリティ外のエリアのみ）。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <p>成田観光プラン 2026 · Day 2 of 2</p>
+  <p>銚子→成田 2泊2日の旅 — by Claude Code</p>
+  <div class="footer-links">
+    <a href="index.html" class="footer-link">← 1日目（銚子）へ戻る</a>
+    <a href="https://www.naritasan.or.jp/" class="footer-link" target="_blank" rel="noopener">成田山新勝寺 公式</a>
+    <a href="https://www.yumebokujo.com/" class="footer-link" target="_blank" rel="noopener">成田ゆめ牧場 公式</a>
+    <a href="https://www.nrtk.jp/" class="footer-link" target="_blank" rel="noopener">成田市観光協会</a>
+    <a href="https://transit.yahoo.co.jp/search/result?from=%E6%88%90%E7%94%B0&to=%E6%9F%8F" class="footer-link" target="_blank" rel="noopener">成田→柏 乗換案内</a>
+  </div>
+  <p class="credit-note">写真: Wikimedia Commons / CC BY-SA ／ 料金・時刻は要事前確認</p>
+</footer>
+
+<!-- ════════════ LIGHTBOX ════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="拡大表示">
+  <button id="lb-close" aria-label="閉じる">✕</button>
+  <button id="lb-prev" class="lb-hidden" aria-label="前へ">‹</button>
+  <div id="lb-figure">
+    <img id="lb-img" src="" alt="">
+    <p id="lb-cap"></p>
+  </div>
+  <button id="lb-next" class="lb-hidden" aria-label="次へ">›</button>
+</div>
+
+<script>
+/* Sticky Nav */
+const heroEl = document.querySelector('.hero');
+const nav = document.getElementById('sticky-nav');
+const navObs = new IntersectionObserver(([e]) => {
+  nav.classList.toggle('nav-visible', !e.isIntersecting);
+}, {threshold:0});
+navObs.observe(heroEl);
+
+/* Card fade-in */
+const cardObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:.12});
+document.querySelectorAll('.day-card').forEach(c => cardObs.observe(c));
+
+/* Lightbox */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-cap');
+const lbClose = document.getElementById('lb-close');
+let lbGroup = [], lbIdx = 0;
+
+function openLb(src, cap, group, idx) {
+  lbImg.src = src; lbCap.textContent = cap || '';
+  lbGroup = group || []; lbIdx = idx || 0;
+  lb.classList.add('lb-open');
+  document.body.style.overflow = 'hidden';
+  const hasPrev = document.getElementById('lb-prev');
+  const hasNext = document.getElementById('lb-next');
+  if (lbGroup.length > 1) {
+    hasPrev.classList.remove('lb-hidden');
+    hasNext.classList.remove('lb-hidden');
+  } else {
+    hasPrev.classList.add('lb-hidden');
+    hasNext.classList.add('lb-hidden');
+  }
+}
+function closeLb() {
+  lb.classList.remove('lb-open');
+  document.body.style.overflow = '';
+  setTimeout(() => { lbImg.src = ''; }, 300);
+}
+lbClose.addEventListener('click', closeLb);
+lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
+document.getElementById('lb-prev').addEventListener('click', () => {
+  lbIdx = (lbIdx - 1 + lbGroup.length) % lbGroup.length;
+  lbImg.src = lbGroup[lbIdx].src; lbCap.textContent = lbGroup[lbIdx].cap;
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  lbIdx = (lbIdx + 1) % lbGroup.length;
+  lbImg.src = lbGroup[lbIdx].src; lbCap.textContent = lbGroup[lbIdx].cap;
+});
+document.addEventListener('keydown', e => {
+  if(!lb.classList.contains('lb-open')) return;
+  if(e.key === 'Escape') closeLb();
+  if(e.key === 'ArrowLeft' && lbGroup.length > 1) document.getElementById('lb-prev').click();
+  if(e.key === 'ArrowRight' && lbGroup.length > 1) document.getElementById('lb-next').click();
+});
+
+/* 写真クリック → ライトボックス */
+document.querySelectorAll('.day-photo, .thumb, .hl-img, .food-img').forEach(el => {
+  el.addEventListener('click', () => {
+    const img = el.querySelector('img');
+    if(!img) return;
+    openLb(img.src, img.alt, [], 0);
+  });
+});
+
+/* サムネイルグループ */
+document.querySelectorAll('.thumb-row').forEach(row => {
+  const thumbs = [...row.querySelectorAll('.thumb')];
+  const group = thumbs.map(t => ({
+    src: t.querySelector('img').src,
+    cap: t.querySelector('.thumb-cap')?.textContent || ''
+  }));
+  thumbs.forEach((thumb, i) => {
+    thumb.addEventListener('click', e => {
+      e.stopPropagation();
+      openLb(group[i].src, group[i].cap, group, i);
+    });
+  });
+});
+</script>
+</body>
+</html>
